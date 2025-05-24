@@ -10,10 +10,49 @@ class Homescreen extends StatelessWidget{
   const Homescreen({Key? key, }) : super(key: key); 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
-        title: Text('Список задач'),
-      ),
+        title: Title(
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Задачник',
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: const Color.fromARGB(255, 3, 32, 248)
+        ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 3, 32, 248),
+            borderRadius: BorderRadius.all(Radius.circular(10))
+          ),
+        child: ElevatedButton(
+         style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 3, 32, 248)),
+         ),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => AddTodoScreen()
+              ));
+          }, 
+          child: Text('+ Добавить задачу',
+          style: TextStyle(
+            color: Colors.white
+          ),)
+          ),
+        )
+        
+        
+            ]
+          ),
+            
+          ),),
+      
       body: BlocBuilder<TodoBloc, TodoState>( // создаем BlocBuilder c расширениями TodoBloc и TodoState
         builder: (context, state) {
           if (state is TodoLoading) { // если состояние TodoLoading 
@@ -33,7 +72,9 @@ class Homescreen extends StatelessWidget{
           }
         }
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: 
+        
+        FloatingActionButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) => AddTodoScreen()
@@ -41,6 +82,7 @@ class Homescreen extends StatelessWidget{
           },
           child: Icon(Icons.add),
           ),
+          
     );
   }
 
