@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_event.dart';
 import 'package:to_do/data/model/todo.dart';
@@ -19,7 +20,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   final _descriptionController = TextEditingController();
   DateTime? _dateTime;
   String? header;
-  bool isEditing = false;
+ 
   
   
   @override
@@ -48,6 +49,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
           child: Column(
             children: [
               TextFormField(
+                autovalidateMode: AutovalidateMode.always,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Пожалуйста введите имя пользователя';
@@ -68,6 +70,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                 height: 16,
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.always,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Пожалуйста введите заголовок';
@@ -88,11 +91,12 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                 height: 16, // отступ между элементами
               ),
               TextFormField(
+                autovalidateMode: AutovalidateMode.always,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Пожалуйста введите описание';
                   } 
-                  return null;
+                    return null;
                 },
                 onSaved: (value) => header = value,
                 style: TextStyle(
@@ -107,7 +111,6 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
               SizedBox(
                 height: 24, // отступ между элементами
               ),
-              
              Container(
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 13),
               // height: height * 0.07,
@@ -122,7 +125,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
               child: GestureDetector(
                 onTap: () => _selectDate(context),
                 child: Text(
-                _dateTime == null ? 'Выберите дату' : _dateTime.toString(),
+                _dateTime == null ? 'Выберите дату' :  DateFormat('yyyy-MM-dd -kk:mm').format(_dateTime!),
                 style: TextStyle(
                   color: Colors.grey.shade700,
                 fontSize: myFontSize,
@@ -182,7 +185,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
       context: context, 
       initialDate: _dateTime ?? DateTime.now(),
       firstDate: DateTime(2000), 
-      lastDate: DateTime(2101));   
+      lastDate: DateTime(2101));
       if (dateTime != null && dateTime != _dateTime) {
         setState(() {
           _dateTime = dateTime;
@@ -191,27 +194,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
       } 
 }
 
-  void toggleEdit () {
-    setState(() {
-      if (!isEditing) {
-        _nameController ;
-        _descriptionController;
-        _dateTime;
-        _titleController;
-      }
-      isEditing = !isEditing;
-    });
-  }
+  
 
-  void SaveChange () {
-    setState(() {
-      _nameController;
-      _dateTime;
-      _descriptionController;
-      _titleController;
-      isEditing = false;
-    });
-  }
  
-
 }

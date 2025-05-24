@@ -9,6 +9,7 @@ class Todo extends Equatable {
   final DateTime createdAt;
   final bool isCompleted;
   final bool isEditing;
+  final bool editAt;
   // Делаем конструктор этого класса
   Todo({
     required this.name,
@@ -17,10 +18,12 @@ class Todo extends Equatable {
     this.description = '',
     DateTime? createdAt,
     this.isCompleted = false,
-    required this.isEditing
+    required this.isEditing,
+    bool? editAt
   }) : 
   id = id ?? const Uuid().v4(),// если у нас есть id то используем его а если нет то генерируем его
-   createdAt = createdAt ?? DateTime.now();// если у нас есть createdAt то используем его а если нету то получаем настоящее время
+   createdAt = createdAt ?? DateTime.now(),
+   editAt = false;// если у нас есть createdAt то используем его а если нету то получаем настоящее время
 // Применяем новую функцию copyWith
   
   Todo copyWith({
@@ -28,7 +31,9 @@ class Todo extends Equatable {
     String? title,
     String? description,
     bool? isCompleted,
-    bool? isEditing
+    bool? isEditing,
+    bool? editAt,
+    DateTime? createdAt
   }) {
     return Todo(
       name: name ?? this.name,
@@ -37,7 +42,8 @@ class Todo extends Equatable {
       description: description ?? this.description,
       createdAt: createdAt ,
       isCompleted: isCompleted ?? this.isCompleted ,
-      isEditing: isEditing ?? this.isEditing
+      isEditing: isEditing ?? this.isEditing,
+      editAt: false
     );
   }
 // Закидываем все данные в Json
@@ -49,7 +55,8 @@ class Todo extends Equatable {
       'description': description,
       'createdAt': createdAt.toIso8601String(), // формат времени
       'isCompleted': isCompleted,
-      'isEditing': isEditing
+      'isEditing': isEditing,
+      'editAt': editAt
     };
   }
   //Обращаемся к ним из Jsona
@@ -61,7 +68,8 @@ class Todo extends Equatable {
       description: json['description'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       isCompleted: json['isCompleted'] as bool,
-      isEditing: json['isEditing'] as bool
+      isEditing: json['isEditing'] as bool,
+      editAt: json['editAt'] as bool
     );
   }
 
@@ -73,6 +81,7 @@ class Todo extends Equatable {
     description,
     createdAt,
     isCompleted,
-    isEditing
+    isEditing,
+    editAt
   ];
 }

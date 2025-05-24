@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_event.dart';
 import 'package:to_do/data/model/todo.dart';
+import 'package:to_do/screens/edit_todo_screen.dart';
 
 class TodoItem extends StatelessWidget {
   final Todo todo;
   const TodoItem({required this.todo, Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    print(todo.editAt);
     return Card( // создаем нашу карточку задачи
       margin: EdgeInsets.symmetric( // внешних отступ
         horizontal: 16,
@@ -33,16 +36,17 @@ class TodoItem extends StatelessWidget {
                   children: [
                     Text(todo.name,
                       style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      decoration: todo.isCompleted ? TextDecoration.lineThrough : null // если задача выполнена то зачернки линией текст иначе ничего
+                      decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
+                       // если задача выполнена то зачернки линией текст иначе ничего
                     ),
                     ),
                     Text(todo.title , // обращаемся к модели и выбираем поле title
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      decoration: todo.isCompleted ? TextDecoration.lineThrough : null // если задача выполнена то зачернки линией текст иначе ничего
+                      decoration: todo.isCompleted ? TextDecoration.lineThrough : null ,// если задача выполнена то зачернки линией текст иначе ничего
                     ),
                     ),
                     if (todo.description.isNotEmpty) 
@@ -57,13 +61,25 @@ class TodoItem extends StatelessWidget {
                         ),
                       Padding(
                         padding: EdgeInsets.only(top: 4),
-                        child: Text('Дата создания : ${todo.createdAt}' , // обращаем к классу и выбираем поле дата создания с типом данных DateTime
+                        child: Text('Дата создания : ${DateFormat('yyyy-MM-dd -kk:mm').format(todo.createdAt)}', // обращаем к классу и выбираем поле дата создания с типом данных DateTime
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[500],
                           decoration: todo.isCompleted ? TextDecoration.lineThrough : null
                         ),
                         ),
+                        ),
+                        
+                        Padding(
+                        padding: EdgeInsets.only(top: 4),
+                        child: todo.editAt 
+                        ? Text('Дата редактирования : ${DateFormat('yyyy-MM-dd -kk:mm').format(DateTime.now())}' ,// обращаем к классу и выбираем поле дата создания с типом данных DateTime
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey[500],
+                          decoration: todo.isCompleted ? TextDecoration.lineThrough : null
+                        ),
+                        ) : null
                         ),
                       IconButton(
                         onPressed: () {
@@ -77,9 +93,8 @@ class TodoItem extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () {
                             Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => 
-                              ))
-                          
+                              builder: (context) => EditTodoScreen(todo: todo)
+                              ));
                           }, 
                           child: Text(
                             'Изменить задачу'
