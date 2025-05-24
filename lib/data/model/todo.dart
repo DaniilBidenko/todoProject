@@ -23,7 +23,7 @@ class Todo extends Equatable {
   }) : 
   id = id ?? const Uuid().v4(),// если у нас есть id то используем его а если нет то генерируем его
    createdAt = createdAt ?? DateTime.now(),
-   editAt = editAt ?? this.editAt;// если у нас есть createdAt то используем его а если нету то получаем настоящее время
+   editAt = editAt ?? false;// если у нас есть createdAt то используем его а если нету то получаем настоящее время
 // Применяем новую функцию copyWith
   
   Todo copyWith({
