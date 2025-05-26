@@ -12,113 +12,35 @@ class TodoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(todo.editAt);
-    // return Card( // создаем нашу карточку задачи
-    //   margin: EdgeInsets.symmetric( // внешних отступ
-    //     horizontal: 16,
-    //     vertical: 8
-    //     ),
-    //   child: Padding(
-    //     padding: EdgeInsets.all(16),
-    //     child: Stack(
-    //       children: [
-    //         Positioned(
-    //           top: 50,
-    //           left: 50,
-    //           right: 50,
-    //           child: Container(
-    //             decoration: BoxDecoration(
-    //               color: Colors.black,
-    //               borderRadius: BorderRadius.all(Radius.circular(5))
-    //             ),
-    //             child: Row(
-    //               children: [
-    //                 Positioned(
-    //                   child: Checkbox(
-    //                     value: todo.isCompleted, // берем данные нашей модели 
-    //                     onChanged: (_) {
-    //                     context.read<TodoBloc>().add(ToggleTodoStatus(todo.id)); //   отправляем событие в блок для изменения статуса задачи
-    //                     }   
-    //                   ),
-    //                 ),
-    //                 Positioned(
-    //                   child: Text(todo.name,
-    //                   style: TextStyle(
-    //                   fontSize: 24,
-    //                   fontWeight: FontWeight.bold,
-    //                   decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
-    //                    // если задача выполнена то зачернки линией текст иначе ничего
-    //                 ),
-    //                 ),
-    //                   ),
-    //                 Positioned(
-    //                   child: Text(todo.description,
-    //                     style: TextStyle(
-    //                       color: Colors.grey[600],
-    //                       decoration: todo.isCompleted ? TextDecoration.lineThrough : null // если задача выполнена зачеркни описание линией иначе ничего
-    //                     ),
-    //                     ),
-                        
-    //                   ),
-    //                 Positioned(
-    //                     child: Text('Дата создания : ${DateFormat('yyyy-MM-dd -kk:mm').format(todo.createdAt)}', // обращаем к классу и выбираем поле дата создания с типом данных DateTime
-    //                     style: TextStyle(
-    //                       fontSize: 12,
-    //                       color: Colors.grey[500],
-    //                       decoration: todo.isCompleted ? TextDecoration.lineThrough : null
-    //                     ),
-    //                     ),
-    //                     ),
-    //                   Positioned(
-    //                       child: Padding(
-    //                     padding: EdgeInsets.only(top: 4),
-    //                     child: todo.editAt 
-    //                     ? Text('Дата редактирования : ${DateFormat('yyyy-MM-dd -kk:mm').format(DateTime.now())}' ,// обращаем к классу и выбираем поле дата создания с типом данных DateTime
-    //                     style: TextStyle(
-    //                       fontSize: 12,
-    //                       color: Colors.grey[500],
-    //                       decoration: todo.isCompleted ? TextDecoration.lineThrough : null
-    //                     ),
-    //                     ) : null
-    //                     ),
-    //                       ),
-    //                   Positioned(
-    //                     child: IconButton(
-    //                     onPressed: () {
-    //                       context.read<TodoBloc>().add(DeleteTodo(todo.id)); // отправляем событие в блок для уделания задачи
-    //                     }, 
-    //                     icon: Icon(Icons.delete), // значок удаления
-    //                     ),
-    //                     ), 
-    //                     Positioned(
-    //                       child: ElevatedButton(
-    //                       onPressed: () {
-    //                         Navigator.push(context, MaterialPageRoute(
-    //                           builder: (context) => EditTodoScreen(todo: todo)
-    //                           ));
-    //                       }, 
-    //                       child: Text(
-    //                         'Изменить задачу'
-    //                       )
-    //                       )
-    //                       ) 
-    //               ],
-    //             ),
-    //           )
-    //           )
-    //       ],
-    //     )
-    //     )
-    // );
-    return Card( // создаем нашу карточку задачи
+    return Container(
       margin: EdgeInsets.symmetric( // внешних отступ
-         horizontal: 70,
-        vertical: 25
+         horizontal: 16,
+        vertical: 8
+         ),
+      width: 50,
+      height: 80,
+      decoration: BoxDecoration(
+        color: Colors.red,
+        border: Border(
+          left: BorderSide(
+            color: Colors.green,
+            width: 4
+          )
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(20))
+      ),
+      child: Card(
+         // создаем нашу карточку задачи
+      margin: EdgeInsets.symmetric( // внешних отступ
+         horizontal: 0,
+        vertical: 0
          ),
        child: Padding(
         padding: EdgeInsets.all(16), // отступ со всех сторон
         child: Row(
           children: [
             Checkbox(
+              shape: CircleBorder(),
               value: todo.isCompleted, // берем данные нашей модели 
               onChanged: (_) {
                 context.read<TodoBloc>().add(ToggleTodoStatus(todo.id)); //   отправляем событие в блок для изменения статуса задачи
@@ -128,22 +50,18 @@ class TodoItem extends StatelessWidget {
                 width: 16, // отступ между элементами
               ),
               Expanded(
-                child: Column(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(todo.name,
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(todo.name,
                       style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
                        // если задача выполнена то зачернки линией текст иначе ничего
-                    ),
-                    ),
-                    Text(todo.title , // обращаемся к модели и выбираем поле title
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      decoration: todo.isCompleted ? TextDecoration.lineThrough : null ,// если задача выполнена то зачернки линией текст иначе ничего
                     ),
                     ),
                     if (todo.description.isNotEmpty) 
@@ -151,14 +69,22 @@ class TodoItem extends StatelessWidget {
                         padding: EdgeInsets.only(top: 4),
                         child: Text(todo.description,
                         style: TextStyle(
+                          fontSize: 10,
                           color: Colors.grey[600],
                           decoration: todo.isCompleted ? TextDecoration.lineThrough : null // если задача выполнена зачеркни описание линией иначе ничего
                         ),
                         ),
                         ),
-                      Padding(
+                        ]
+                        
+                      )
+                      ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Padding(
                         padding: EdgeInsets.only(top: 4),
-                        child: Text('Дата создания : ${DateFormat('yyyy-MM-dd -kk:mm').format(todo.createdAt)}', // обращаем к классу и выбираем поле дата создания с типом данных DateTime
+                        child: Text('Дата создания : ${DateFormat('yyyy-MM-dd').format(todo.createdAt)}', // обращаем к классу и выбираем поле дата создания с типом данных DateTime
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[500],
@@ -170,7 +96,7 @@ class TodoItem extends StatelessWidget {
                         Padding(
                         padding: EdgeInsets.only(top: 4),
                         child: todo.editAt 
-                        ? Text('Дата редактирования : ${DateFormat('yyyy-MM-dd -kk:mm').format(DateTime.now())}' ,// обращаем к классу и выбираем поле дата создания с типом данных DateTime
+                        ? Text('Дата редактирования : ${DateFormat('yyyy-MM-dd').format(DateTime.now())}' ,// обращаем к классу и выбираем поле дата создания с типом данных DateTime
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[500],
@@ -178,6 +104,10 @@ class TodoItem extends StatelessWidget {
                         ),
                         ) : null
                         ),
+                        ],
+                      )
+                      ),
+                      
                       IconButton(
                         onPressed: () {
                           context.read<TodoBloc>().add(DeleteTodo(todo.id)); // отправляем событие в блок для уделания задачи
@@ -203,6 +133,7 @@ class TodoItem extends StatelessWidget {
         ),
         ),
         
+    ),
     );
   }
 }
