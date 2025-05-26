@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_state.dart';
 import 'package:to_do/screens/add_todo_screen.dart';
+import 'package:to_do/widgets/new_todo_item.dart';
 import 'package:to_do/widgets/todo_item.dart';
 
 class Homescreen extends StatelessWidget{ 
@@ -72,16 +73,16 @@ class Homescreen extends StatelessWidget{
           }
         }
         ),
-        floatingActionButton: 
+        // floatingActionButton: 
         
-        FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => AddTodoScreen()
-              ));
-          },
-          child: Icon(Icons.add),
-          ),
+        // FloatingActionButton(
+        //   onPressed: () {
+        //     Navigator.push(context, MaterialPageRoute(
+        //       builder: (context) => AddTodoScreen()
+        //       ));
+        //   },
+        //   child: Icon(Icons.add),
+        //   ),
           
     );
   }
