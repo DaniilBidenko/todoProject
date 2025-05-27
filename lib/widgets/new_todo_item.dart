@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -14,13 +15,13 @@ class TodoItem extends StatelessWidget {
     print(todo.editAt);
     return Container(
       margin: EdgeInsets.symmetric( // внешних отступ
-         horizontal: 16,
+         horizontal: 24,
         vertical: 8
          ),
-      width: 50,
-      height: 80,
+      width: 40,
+      height: 75,
       decoration: BoxDecoration(
-        color: Colors.red,
+        color: Colors.white,
         border: Border(
           left: BorderSide(
             color: Colors.green,
@@ -38,6 +39,7 @@ class TodoItem extends StatelessWidget {
        child: Padding(
         padding: EdgeInsets.all(16), // отступ со всех сторон
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Checkbox(
               shape: CircleBorder(),
@@ -47,14 +49,16 @@ class TodoItem extends StatelessWidget {
               }
               ),
               SizedBox(
-                width: 16, // отступ между элементами
+                width: 15,
               ),
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Expanded(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(todo.name,
                       style: TextStyle(
@@ -79,14 +83,17 @@ class TodoItem extends StatelessWidget {
                         
                       )
                       ),
+                      
+                    
                     Expanded(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
                         padding: EdgeInsets.only(top: 4),
                         child: Text('Дата создания : ${DateFormat('yyyy-MM-dd').format(todo.createdAt)}', // обращаем к классу и выбираем поле дата создания с типом данных DateTime
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 10,
                           color: Colors.grey[500],
                           decoration: todo.isCompleted ? TextDecoration.lineThrough : null
                         ),
@@ -98,7 +105,7 @@ class TodoItem extends StatelessWidget {
                         child: todo.editAt 
                         ? Text('Дата редактирования : ${DateFormat('yyyy-MM-dd').format(DateTime.now())}' ,// обращаем к классу и выбираем поле дата создания с типом данных DateTime
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 10,
                           color: Colors.grey[500],
                           decoration: todo.isCompleted ? TextDecoration.lineThrough : null
                         ),
@@ -112,10 +119,7 @@ class TodoItem extends StatelessWidget {
                         onPressed: () {
                           context.read<TodoBloc>().add(DeleteTodo(todo.id)); // отправляем событие в блок для уделания задачи
                         }, 
-                        icon: Icon(Icons.delete_forever_outlined, size: 20,), // значок удаления
-                        ),
-                        SizedBox(
-                          height: 8,
+                        icon: Icon(Icons.delete_forever_outlined, size: 17,), // значок удаления
                         ),
                         IconButton(
                           onPressed: 
@@ -124,7 +128,7 @@ class TodoItem extends StatelessWidget {
                               builder: (context) => EditTodoScreen(todo: todo)
                               ));
                           }, 
-                          icon: Icon(Icons.edit_document, size: 20,))
+                          icon: Icon(Icons.edit_document, size: 17,))
                         
                   ],
                 )
@@ -136,4 +140,7 @@ class TodoItem extends StatelessWidget {
     ),
     );
   }
+
 }
+
+

@@ -1,9 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/bloc/todo_event.dart';
 import 'package:to_do/bloc/todo_state.dart';
-import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/data/repository/todo_repository.dart';
-import 'package:to_do/screens/add_todo_screen.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> { // создаем класс TodoBloc с расширениями TodoEvent и TodoState
    final TodoRepository repository; // Создаем нашу переменную с классом TodoRepository

@@ -17,7 +17,7 @@ class EditTodoScreen extends StatefulWidget{
 class _EditTodoScreenState extends State<EditTodoScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
-  late TextEditingController _titleController;
+  // late TextEditingController _titleController;
   late TextEditingController _descriptionController;
   String? header;
   String? description;
@@ -29,16 +29,16 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
   
   @override
   void initState() {
-    _titleController = TextEditingController(text: widget.todo.title);
+    // _titleController = TextEditingController(text: widget.todo.title);
     _descriptionController = TextEditingController(text: widget.todo.description);
     _nameController = TextEditingController(text: widget.todo.name);
     _editTime = widget.todo.createdAt;
-    formatDate = DateFormat('yyyy-MM-dd-kk:mm').format(_editTime!);
+    formatDate = DateFormat('yyyy-MM-dd').format(_editTime!);
   }
 
   @override
   void dispose () {
-    _titleController.dispose();
+    // _titleController.dispose();
     _descriptionController.dispose();
     _nameController.dispose();
     super.dispose();
@@ -76,21 +76,21 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
               SizedBox (
                 height: 16
               ),
-              TextFormField(
-                autovalidateMode: AutovalidateMode.always,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Пожалуйста введите заголовок';
-                  } 
-                  return null;
-                },
-                onSaved: (value) => header = value,
-                controller: _titleController,
-                decoration: InputDecoration(
-                  labelText: 'Заголовок',
-                  border: OutlineInputBorder()
-                ),
-              ),
+              // TextFormField(
+              //   autovalidateMode: AutovalidateMode.always,
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Пожалуйста введите заголовок';
+              //     } 
+              //     return null;
+              //   },
+              //   onSaved: (value) => header = value,
+              //   controller: _titleController,
+              //   decoration: InputDecoration(
+              //     labelText: 'Заголовок',
+              //     border: OutlineInputBorder()
+              //   ),
+              // ),
               SizedBox(
                 height: 16,
               ),
@@ -126,7 +126,7 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
               child: GestureDetector(
                 onTap: () => _selectDate(context),
                 child: Text(
-                _editTime == null ? 'Выберите дату' :  DateFormat('yyyy-MM-dd -kk:mm').format(_editTime!),
+                _editTime == null ? 'Выберите дату' :  DateFormat('yyyy-MM-dd').format(_editTime!),
                 style: TextStyle(
                   color: Colors.grey.shade700,
                 fontSize: myFontSize,
@@ -175,7 +175,7 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
   }
   void _updateTodo () {
     if (_formKey.currentState!.validate()) {
-      final updateTodo = widget.todo.copyWith(title: _titleController.text, description: _descriptionController.text, name: _nameController.text, createdAt: _editTime, editAt: true);
+      final updateTodo = widget.todo.copyWith(description: _descriptionController.text, name: _nameController.text, createdAt: _editTime, editAt: true);
       context.read<TodoBloc>().add(EditTodo(updateTodo));
       Navigator.pop(context);
     }

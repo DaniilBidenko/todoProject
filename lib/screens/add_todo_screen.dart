@@ -66,27 +66,24 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                   border: OutlineInputBorder()
                 ),
               ),
-              SizedBox(
-                height: 16,
-              ),
-              TextFormField(
-                autovalidateMode: AutovalidateMode.always,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Пожалуйста введите заголовок';
-                  } 
-                  return null;
-                },
-                onSaved: (value) => header = value,
-                 style: TextStyle(
-                  fontSize: myFontSize,
-                ),
-                controller: _titleController, // исользуем нашу переменную для сохранения заголовка
-                decoration: InputDecoration(
-                  labelText: 'Заголовок',
-                  border: OutlineInputBorder()
-                ),
-              ),
+              // TextFormField(
+              //   autovalidateMode: AutovalidateMode.always,
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Пожалуйста введите заголовок';
+              //     } 
+              //     return null;
+              //   },
+              //   onSaved: (value) => header = value,
+              //    style: TextStyle(
+              //     fontSize: myFontSize,
+              //   ),
+              //   controller: _titleController, // исользуем нашу переменную для сохранения заголовка
+              //   decoration: InputDecoration(
+              //     labelText: 'Заголовок',
+              //     border: OutlineInputBorder()
+              //   ),
+              // ),
               SizedBox(
                 height: 16, // отступ между элементами
               ),
@@ -125,7 +122,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
               child: GestureDetector(
                 onTap: () => _selectDate(context),
                 child: Text(
-                _dateTime == null ? 'Выберите дату' :  DateFormat('yyyy-MM-dd -kk:mm').format(_dateTime!),
+                _dateTime == null ? 'Выберите дату' :  DateFormat('yyyy-MM-dd').format(_dateTime!),
                 style: TextStyle(
                   color: Colors.grey.shade700,
                 fontSize: myFontSize,
@@ -169,10 +166,11 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
        _formKey.currentState!.save();
       final newTodo = Todo(
        name: _nameController.text, // делаем обьект нашего класса Todo
-       title: _titleController.text, // преобразуем наши переменные в текст
+      //  title: _titleController.text, // преобразуем наши переменные в текст
        description: _descriptionController.text,
        createdAt: _dateTime,
-       isEditing: false
+       isEditing: false,
+      //  dropDown: ['Легкий', 'Средний' , 'Тяжелый']
        );
       context.read<TodoBloc>().add(AddTodo(newTodo)); // отправляем наше событие в блок 
       Navigator.pop(context); // возвращение на предыдущий экран

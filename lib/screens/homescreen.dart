@@ -13,7 +13,7 @@ class Homescreen extends StatelessWidget{
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Title(
           color: Colors.white,
