@@ -91,7 +91,9 @@ class TodoItem extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(todo.valueDropDown),
+                          Text(
+                            todo.valueDropDown,
+                          ),
                           
                           SizedBox(
                             width: 15,
