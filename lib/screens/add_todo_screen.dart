@@ -5,6 +5,8 @@ import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_event.dart';
 import 'package:to_do/data/model/todo.dart';
 
+const List<String> priority = ['Низкий', 'Средний', 'Высокий'];
+
 class AddTodoScreen extends StatefulWidget{
   const AddTodoScreen({Key? key}) : super (key: key);
   
@@ -20,6 +22,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   final _descriptionController = TextEditingController();
   DateTime? _dateTime;
   String? header;
+  
+  String choosePriority = priority.first;
  
   
   
@@ -36,7 +40,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   @override // создаем экран
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double height = MediaQuery.of(context).size.height;
     double myFontSize = width * 0.018;
     return Scaffold(
       appBar: AppBar(
@@ -131,9 +135,23 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                 ),
               ),
              ),
-              SizedBox(
-                height: 24,
-              ),
+             DropdownButton<String>(
+      value: choosePriority,
+      icon: const Icon(Icons.arrow_downward),
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(height: 2, color: Colors.deepPurpleAccent),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          choosePriority = value!;
+        });
+      },
+      items:
+          priority.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(value: value, child: Text(value));
+          }).toList(),
+    ),
               SizedBox(
                 height: 24,
               ),
@@ -170,9 +188,10 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
        description: _descriptionController.text,
        createdAt: _dateTime,
        isEditing: false,
-      //  dropDown: ['Легкий', 'Средний' , 'Тяжелый']
+       valueDropDown: choosePriority
        );
-      context.read<TodoBloc>().add(AddTodo(newTodo)); // отправляем наше событие в блок 
+      context.read<TodoBloc>().add(AddTodo(newTodo)); 
+      print(choosePriority);// отправляем наше событие в блок 
       Navigator.pop(context); // возвращение на предыдущий экран
     } 
    

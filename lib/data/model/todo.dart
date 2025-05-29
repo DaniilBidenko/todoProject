@@ -10,7 +10,7 @@ class Todo extends Equatable {
   final bool isCompleted;
   final bool isEditing;
   final bool editAt;
-  // final List<dynamic> dropDown;
+  final String valueDropDown;
   // Делаем конструктор этого класса
   Todo({
     required this.name,
@@ -21,7 +21,7 @@ class Todo extends Equatable {
     this.isCompleted = false,
     required this.isEditing,
     bool? editAt,
-    // required this.dropDown
+    required this.valueDropDown
   }) : 
   id = id ?? const Uuid().v4(),// если у нас есть id то используем его а если нет то генерируем его
    createdAt = createdAt ?? DateTime.now(),
@@ -36,6 +36,7 @@ class Todo extends Equatable {
     bool? isEditing,
     bool? editAt,
     DateTime? createdAt,
+    String? valueDropDown
   }) {
     return Todo(
       name: name ?? this.name,
@@ -46,7 +47,7 @@ class Todo extends Equatable {
       isCompleted: isCompleted ?? this.isCompleted ,
       isEditing: isEditing ?? this.isEditing,
       editAt: editAt ?? this.editAt,
-      // dropDown: dropDown ?? dropDown,
+      valueDropDown: valueDropDown ?? valueDropDown!,
     );
   }
 // Закидываем все данные в Json
@@ -60,7 +61,7 @@ class Todo extends Equatable {
       'isCompleted': isCompleted,
       'isEditing': isEditing,
       'editAt': editAt,
-      // 'dropDown': dropDown
+      'dropDown': valueDropDown
     };
   }
   //Обращаемся к ним из Jsona
@@ -74,7 +75,7 @@ class Todo extends Equatable {
       isCompleted: json['isCompleted'] as bool,
       isEditing: json['isEditing'] as bool,
       editAt: json['editAt'] as bool,
-      // dropDown: json['dropDown'] as List
+      valueDropDown: json['valueDropDown'] as String
     );
   }
 
@@ -88,6 +89,6 @@ class Todo extends Equatable {
     isCompleted,
     isEditing,
     editAt,
-    // dropDown
+    valueDropDown
   ];
 }

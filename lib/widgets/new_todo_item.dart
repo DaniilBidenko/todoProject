@@ -13,6 +13,7 @@ class TodoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(todo.editAt);
+    print(todo.valueDropDown);
     return Container(
       margin: EdgeInsets.symmetric( // внешних отступ
          horizontal: 24,
@@ -80,15 +81,21 @@ class TodoItem extends StatelessWidget {
                         ),
                         ),
                         ]
-                        
                       )
                       ),
-                      
-                    
-                    Expanded(
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
+                          Text(todo.valueDropDown),
+                          
+                          SizedBox(
+                            width: 15,
+                          ),
                           Padding(
                         padding: EdgeInsets.only(top: 4),
                         child: Text('Дата создания : ${DateFormat('yyyy-MM-dd').format(todo.createdAt)}', // обращаем к классу и выбираем поле дата создания с типом данных DateTime
@@ -114,22 +121,30 @@ class TodoItem extends StatelessWidget {
                         ],
                       )
                       ),
-                      
-                      IconButton(
+                      SizedBox(
+                        width: 15,
+                      ),
+                            IconButton(
+                        padding: EdgeInsets.all(2),
+                        constraints: BoxConstraints(),
                         onPressed: () {
                           context.read<TodoBloc>().add(DeleteTodo(todo.id)); // отправляем событие в блок для уделания задачи
                         }, 
-                        icon: Icon(Icons.delete_forever_outlined, size: 17,), // значок удаления
+                        icon: Icon(Icons.delete_forever_outlined, size: 20,), // значок удаления
                         ),
                         IconButton(
+                          padding: EdgeInsets.all(2),
+                          constraints: BoxConstraints(),
                           onPressed: 
                            () {
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) => EditTodoScreen(todo: todo)
                               ));
                           }, 
-                          icon: Icon(Icons.edit_document, size: 17,))
-                        
+                          icon: Icon(Icons.edit_document, size: 20,))
+                          ],
+                        )
+                        ),                                             
                   ],
                 )
                 )
