@@ -3,17 +3,41 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_state.dart';
 import 'package:to_do/data/model/todo.dart';
+import 'package:to_do/my_color/color.dart';
 import 'package:to_do/screens/add_todo_screen.dart';
 import 'package:to_do/screens/settings_screen.dart';
 import 'package:to_do/widgets/new_todo_item.dart';
 
-class Homescreen extends StatelessWidget{ 
+class Homescreen extends StatefulWidget{ 
   final Todo todo;
- // создаем домашний экран
-  const Homescreen({Key? key, required this.todo }) : super(key: key); 
+  // создаем домашний экран
+  const Homescreen({Key? key, required this.todo }) : super(key: key);
+  
+  @override
+  _HomescreenState createState() => _HomescreenState();
+}
+
+class _HomescreenState extends State<Homescreen> {
+  late AppBarColors appBarColors;
+  
+  @override
+  void initState() {
+    super.initState();
+    // Инициализируем цвета по умолчанию
+    appBarColors = AppBarColors();
+    // Загружаем настроенные цвета
+    _loadColors();
+  }
+
+  Future<void> _loadColors() async {
+    final colors = await AppBarColors.loadFromPrefs();
+    setState(() {
+      appBarColors = colors;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -26,7 +50,7 @@ class Homescreen extends StatelessWidget{
         style: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
-          color: const Color.fromARGB(255, 3, 32, 248)
+          color: appBarColors.titleAppBarColor
         ),
         ),
         ElevatedButton(
@@ -38,22 +62,25 @@ class Homescreen extends StatelessWidget{
           ),
           onPressed: () {
                             Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => SettingsScreen(todo: todo)
-                              ));
+                              builder: (context) => SettingsScreen()
+                              )).then((_) {
+                                // После возвращения с экрана настроек, перезагружаем цвета
+                                _loadColors();
+                              });
                           }, 
           child: Text('Настройки',
           style: TextStyle(
-            color: Colors.grey[800]
+            color: appBarColors.buttonSettingsTextColor
           ),
           )),
         Container(
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 3, 32, 248),
+            color: appBarColors.titleAppBarColor,
             borderRadius: BorderRadius.all(Radius.circular(10))
           ),
         child: ElevatedButton(
          style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 3, 32, 248)),
+          backgroundColor: MaterialStateProperty.all<Color>(appBarColors.titleAppBarColor),
          ),
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(
@@ -62,7 +89,7 @@ class Homescreen extends StatelessWidget{
           }, 
           child: Text('+ Добавить задачу',
           style: TextStyle(
-            color: Colors.white
+            color: appBarColors.buttonAddedTextColor
           ),)
           ),
         )
