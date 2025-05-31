@@ -47,7 +47,7 @@ class Todo extends Equatable {
       isCompleted: isCompleted ?? this.isCompleted ,
       isEditing: isEditing ?? this.isEditing,
       editAt: editAt ?? this.editAt,
-      valueDropDown: valueDropDown ?? valueDropDown!,
+      valueDropDown: valueDropDown ?? this.valueDropDown,
     );
   }
 // Закидываем все данные в Json
@@ -75,7 +75,7 @@ class Todo extends Equatable {
       isCompleted: json['isCompleted'] as bool,
       isEditing: json['isEditing'] as bool,
       editAt: json['editAt'] as bool,
-      valueDropDown: json['valueDropDown'] as String
+      valueDropDown: json['dropDown'] as String
     );
   }
 

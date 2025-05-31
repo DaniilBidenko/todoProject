@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_state.dart';
+import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/screens/add_todo_screen.dart';
+import 'package:to_do/screens/settings_screen.dart';
 import 'package:to_do/widgets/new_todo_item.dart';
-import 'package:to_do/widgets/todo_item.dart';
 
 class Homescreen extends StatelessWidget{ 
+  final Todo todo;
  // создаем домашний экран
-  const Homescreen({Key? key, }) : super(key: key); 
+  const Homescreen({Key? key, required this.todo }) : super(key: key); 
   @override
   Widget build(BuildContext context) {
 
@@ -27,6 +29,23 @@ class Homescreen extends StatelessWidget{
           color: const Color.fromARGB(255, 3, 32, 248)
         ),
         ),
+        ElevatedButton(
+          
+          style: ElevatedButton.styleFrom(
+            elevation: 0.0,
+            shadowColor: Colors.black,
+            backgroundColor: Colors.white,
+          ),
+          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => SettingsScreen(todo: todo)
+                              ));
+                          }, 
+          child: Text('Настройки',
+          style: TextStyle(
+            color: Colors.grey[800]
+          ),
+          )),
         Container(
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 3, 32, 248),

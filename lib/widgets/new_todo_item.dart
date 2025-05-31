@@ -7,13 +7,25 @@ import 'package:to_do/bloc/todo_event.dart';
 import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/screens/edit_todo_screen.dart';
 
+ Color changePriorityColor (String priorityValue) {
+  switch (priorityValue) {
+    case 'Низкий' :
+      return Colors.lightBlue;
+    case 'Средний' : 
+      return Colors.orangeAccent;
+    case 'Высокий' : 
+      return Colors.redAccent;
+    default :
+      return Colors.black;
+  } 
+ }
+
 class TodoItem extends StatelessWidget {
   final Todo todo;
   const TodoItem({required this.todo, Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print(todo.editAt);
-    print(todo.valueDropDown);
+    final Color colorName = Colors.black;
     return Container(
       margin: EdgeInsets.symmetric( // внешних отступ
          horizontal: 24,
@@ -22,7 +34,7 @@ class TodoItem extends StatelessWidget {
       width: 40,
       height: 75,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.red,
         border: Border(
           left: BorderSide(
             color: Colors.green,
@@ -43,11 +55,18 @@ class TodoItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Checkbox(
+              
               shape: CircleBorder(),
               value: todo.isCompleted, // берем данные нашей модели 
               onChanged: (_) {
                 context.read<TodoBloc>().add(ToggleTodoStatus(todo.id)); //   отправляем событие в блок для изменения статуса задачи
-              }
+              },
+              fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+    if (states.contains(MaterialState.selected)) {
+      return Colors.green; 
+    }
+    return const Color.fromARGB(255, 129, 128, 128); 
+  }),
               ),
               SizedBox(
                 width: 15,
@@ -63,6 +82,7 @@ class TodoItem extends StatelessWidget {
                         children: [
                           Text(todo.name,
                       style: TextStyle(
+                        color: colorName,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
@@ -86,14 +106,20 @@ class TodoItem extends StatelessWidget {
                       Expanded(
                         child: Row(
                           children: [
+                            Text(
+                            todo.valueDropDown,
+                            style: TextStyle(
+                              color: changePriorityColor(todo.valueDropDown),
+                              // decoration: todo.valueDropDown ? TextDecoration.lineThrough : null
+                              ),
+                            
+                          ),
                             Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            todo.valueDropDown,
-                          ),
+                          
                           
                           SizedBox(
                             width: 15,

@@ -5,6 +5,21 @@ import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_event.dart';
 import 'package:to_do/data/model/todo.dart';
 
+const List<String> priority = ['Низкий', 'Средний', 'Высокий'];
+
+ Color changePriorityColor (String priorityValue) {
+  switch (priorityValue) {
+    case 'Низкий' :
+      return Colors.blueAccent;
+    case 'Средний' : 
+      return Colors.orangeAccent;
+    case 'Высокий' : 
+      return Colors.redAccent;
+    default :
+      return Colors.black;
+  } 
+ }
+
 class EditTodoScreen extends StatefulWidget{
   final Todo todo;
   
@@ -24,7 +39,7 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
   String? name;
   DateTime? _editTime;
   String? formatDate;
-  
+  String choosePriority = priority.first;
   
   
   @override
@@ -138,6 +153,22 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
               SizedBox(
                 height: 16,
               ),
+              DropdownButton<String>(
+      value: choosePriority,
+      elevation: 16,
+      style: TextStyle(color: changePriorityColor(choosePriority)),
+      underline: Container(height: 2, color: Colors.black),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          choosePriority = value!;
+        });
+      },
+      items:
+          priority.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(value: value, child: Text(value));
+          }).toList(),
+    ),
             //   Container(
             //   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 13),
             //   // height: height * 0.07,
@@ -194,20 +225,6 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
         print(editTime);
       } 
 }
-
-// Future _editDate (BuildContext context) async{
-//      DateTime? dateTime = await showDatePicker(
-//       context: context, 
-//       initialDate: DateTime.now(),
-//       firstDate: DateTime(2000), 
-//       lastDate: DateTime(2101));
-//       if (dateTime != null && dateTime != _dateTime) {
-//         setState(() {
-//           _dateTime = dateTime;
-//         });
-//         print(dateTime);
-//       } 
-// }
 
   
 }

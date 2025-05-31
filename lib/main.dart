@@ -4,17 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_event.dart';
+import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/data/repository/todo_repository.dart';
 import 'package:to_do/screens/homescreen.dart';
 
 void main () async{
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(MyApp(todo: Todo(name: '', isEditing: true, valueDropDown: '')));
 }
 
 class MyApp extends StatelessWidget {
-
-  MyApp({Key? key}) : super(key: key);
+final Todo todo;
+  MyApp({Key? key, required this.todo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         return bloc;
       },
       child: MaterialApp(
-        home: Homescreen()
+        home: Homescreen(todo: todo,)
       ),
         ),
       );

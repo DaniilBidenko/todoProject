@@ -7,6 +7,19 @@ import 'package:to_do/data/model/todo.dart';
 
 const List<String> priority = ['Низкий', 'Средний', 'Высокий'];
 
+ Color changePriorityColor (String priorityValue) {
+  switch (priorityValue) {
+    case 'Низкий' :
+      return Colors.blueAccent;
+    case 'Средний' : 
+      return Colors.orangeAccent;
+    case 'Высокий' : 
+      return Colors.redAccent;
+    default :
+      return Colors.black;
+  } 
+ }
+
 class AddTodoScreen extends StatefulWidget{
   const AddTodoScreen({Key? key}) : super (key: key);
   
@@ -22,7 +35,6 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   final _descriptionController = TextEditingController();
   DateTime? _dateTime;
   String? header;
-  
   String choosePriority = priority.first;
  
   
@@ -135,12 +147,15 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                 ),
               ),
              ),
-             DropdownButton<String>(
+             SizedBox(
+              height: 30,
+             ),
+             Text('Приоритет : '),
+              DropdownButton<String>(
       value: choosePriority,
-      icon: const Icon(Icons.arrow_downward),
       elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(height: 2, color: Colors.deepPurpleAccent),
+      style: TextStyle(color: changePriorityColor(choosePriority)),
+      underline: Container(height: 0, color: Colors.white),
       onChanged: (String? value) {
         // This is called when the user selects an item.
         setState(() {
