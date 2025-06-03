@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_event.dart';
 import 'package:to_do/data/model/todo.dart';
+import 'package:to_do/my_color/color.dart';
 import 'package:to_do/screens/edit_todo_screen.dart';
 
  Color changePriorityColor (String priorityValue) {
@@ -20,12 +21,32 @@ import 'package:to_do/screens/edit_todo_screen.dart';
   } 
  }
 
-class TodoItem extends StatelessWidget {
+class TodoItem extends StatefulWidget {
   final Todo todo;
   const TodoItem({required this.todo, Key? key}) : super(key: key);
   @override
+  State<TodoItem> createState() => _TodoItemState();
+}
+
+class _TodoItemState extends State<TodoItem> {
+  late TodoColor todoColor;
+
+  @override
+  void initState() {
+    super.initState();
+    todoColor = TodoColor();
+    _loadColors();
+  }
+
+  Future<void> _loadColors() async{
+    final colors = await TodoColor.loadFromPrefs();
+    setState(() {
+      todoColor = colors;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final Color colorName = Colors.black;
     return Container(
       margin: EdgeInsets.symmetric( // внешних отступ
          horizontal: 24,
@@ -55,17 +76,16 @@ class TodoItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Checkbox(
-              
               shape: CircleBorder(),
-              value: todo.isCompleted, // берем данные нашей модели 
+              value: widget.todo.isCompleted, // берем данные нашей модели 
               onChanged: (_) {
-                context.read<TodoBloc>().add(ToggleTodoStatus(todo.id)); //   отправляем событие в блок для изменения статуса задачи
+                context.read<TodoBloc>().add(ToggleTodoStatus(widget.todo.id)); //   отправляем событие в блок для изменения статуса задачи
               },
               fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
     if (states.contains(MaterialState.selected)) {
-      return Colors.green; 
+      return todoColor.iconTaskColor; 
     }
-    return const Color.fromARGB(255, 129, 128, 128); 
+    return todoColor.iconTaskColor; 
   }),
               ),
               SizedBox(
@@ -80,23 +100,24 @@ class TodoItem extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(todo.name,
+                          Text(widget.todo.name,
                       style: TextStyle(
-                        color: colorName,
+                        color: todoColor.titleColor,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
+                      decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null,
                        // если задача выполнена то зачернки линией текст иначе ничего
                     ),
                     ),
-                    if (todo.description.isNotEmpty) 
+                    
+                    if (widget.todo.description.isNotEmpty) 
                       Padding(
                         padding: EdgeInsets.only(top: 4),
-                        child: Text(todo.description,
+                        child: Text(widget.todo.description,
                         style: TextStyle(
                           fontSize: 10,
-                          color: Colors.grey[600],
-                          decoration: todo.isCompleted ? TextDecoration.lineThrough : null // если задача выполнена зачеркни описание линией иначе ничего
+                          color: todoColor.descriptionColor,
+                          decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null // если задача выполнена зачеркни описание линией иначе ничего
                         ),
                         ),
                         ),
@@ -106,43 +127,64 @@ class TodoItem extends StatelessWidget {
                       Expanded(
                         child: Row(
                           children: [
-                            Text(
-                            todo.valueDropDown,
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                            widget.todo.valueDropDown,
                             style: TextStyle(
-                              color: changePriorityColor(todo.valueDropDown),
+                              color: changePriorityColor(widget.todo.valueDropDown),
                               // decoration: todo.valueDropDown ? TextDecoration.lineThrough : null
                               ),
-                            
                           ),
+                          ElevatedButton(
+                           onPressed: _loadColors,
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0.0,
+                              shadowColor: Colors.transparent,
+                              padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                              textStyle: TextStyle(fontSize: 12), 
+                              minimumSize: Size.zero, 
+                              ),
+                          child: Text('Применить настройки',
+                          style: TextStyle(
+                            color: Colors.black
+                          ),),
+                          ),
+                                ]
+                              )
+                              ),
+                            SizedBox(
+                              width: 25
+                            ),
                             Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          
-                          
                           SizedBox(
                             width: 15,
                           ),
                           Padding(
                         padding: EdgeInsets.only(top: 4),
-                        child: Text('Дата создания : ${DateFormat('yyyy-MM-dd').format(todo.createdAt)}', // обращаем к классу и выбираем поле дата создания с типом данных DateTime
+                        child: Text(' ${DateFormat('yyyy-MM-dd').format(widget.todo.createdAt)}', // обращаем к классу и выбираем поле дата создания с типом данных DateTime
                         style: TextStyle(
                           fontSize: 10,
-                          color: Colors.grey[500],
-                          decoration: todo.isCompleted ? TextDecoration.lineThrough : null
+                          color: todoColor.createdData,
+                          decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null
                         ),
                         ),
                         ),
                         
                         Padding(
                         padding: EdgeInsets.only(top: 4),
-                        child: todo.editAt 
-                        ? Text('Дата редактирования : ${DateFormat('yyyy-MM-dd').format(DateTime.now())}' ,// обращаем к классу и выбираем поле дата создания с типом данных DateTime
+                        child: widget.todo.editAt 
+                        ? Text(' ${DateFormat('yyyy-MM-dd').format(DateTime.now())}' ,// обращаем к классу и выбираем поле дата создания с типом данных DateTime
                         style: TextStyle(
                           fontSize: 10,
-                          color: Colors.grey[500],
-                          decoration: todo.isCompleted ? TextDecoration.lineThrough : null
+                          color: todoColor.createdData,
+                          decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null
                         ),
                         ) : null
                         ),
@@ -156,9 +198,9 @@ class TodoItem extends StatelessWidget {
                         padding: EdgeInsets.all(2),
                         constraints: BoxConstraints(),
                         onPressed: () {
-                          context.read<TodoBloc>().add(DeleteTodo(todo.id)); // отправляем событие в блок для уделания задачи
+                          context.read<TodoBloc>().add(DeleteTodo(widget.todo.id)); // отправляем событие в блок для уделания задачи
                         }, 
-                        icon: Icon(Icons.delete_forever_outlined, size: 20,), // значок удаления
+                        icon: Icon(Icons.delete_forever_outlined, size: 20, color: todoColor.iconDeleteColor,), // значок удаления
                         ),
                         IconButton(
                           padding: EdgeInsets.all(2),
@@ -166,10 +208,10 @@ class TodoItem extends StatelessWidget {
                           onPressed: 
                            () {
                             Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => EditTodoScreen(todo: todo)
+                              builder: (context) => EditTodoScreen(todo: widget.todo)
                               ));
                           }, 
-                          icon: Icon(Icons.edit_document, size: 20,))
+                          icon: Icon(Icons.edit_document, size: 20, color: todoColor.iconTaskColor,))
                           ],
                         )
                         ),                                             
@@ -179,11 +221,12 @@ class TodoItem extends StatelessWidget {
           ],
         ),
         ),
-        
     ),
     );
   }
-
 }
+  
+
+
 
 

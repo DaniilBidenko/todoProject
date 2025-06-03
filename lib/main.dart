@@ -15,7 +15,8 @@ void main () async{
 
 class MyApp extends StatelessWidget {
 final Todo todo;
-  MyApp({Key? key, required this.todo}) : super(key: key);
+
+  MyApp({Key? key, required this.todo, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ final Todo todo;
         return bloc;
       },
       child: MaterialApp(
-        home: Homescreen(todo: todo,)
+        home: Homescreen(todo: todo)
       ),
         ),
       );

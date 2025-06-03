@@ -152,10 +152,11 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
              ),
              Text('Приоритет : '),
               DropdownButton<String>(
+                isExpanded: true,
       value: choosePriority,
       elevation: 16,
       style: TextStyle(color: changePriorityColor(choosePriority)),
-      underline: Container(height: 0, color: Colors.white),
+      underline: Container(height: 0, color: Colors.blue),
       onChanged: (String? value) {
         // This is called when the user selects an item.
         setState(() {
