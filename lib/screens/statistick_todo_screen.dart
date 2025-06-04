@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:to_do/bloc/todo_state.dart';
 import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/my_color/color.dart';
 import 'package:to_do/screens/add_todo_screen.dart';
@@ -8,6 +9,7 @@ import 'package:to_do/screens/settings_screen.dart';
 import 'package:to_do/screens/tasks_screen.dart';
 
 class StatistickTodoScreen extends StatefulWidget {
+  
   final Todo? todo;
   StatistickTodoScreen({Key? key, this.todo}) : super (key: key);
 
@@ -16,7 +18,6 @@ class StatistickTodoScreen extends StatefulWidget {
 }
 
 class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
-
     Key _listKey = UniqueKey();
 
   late AppBarColors appBarColors;
@@ -35,11 +36,10 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
       appBarColors = colors;
     });
   }
-
-
-
+ 
   @override
   Widget build(BuildContext context) {
+    
    return Scaffold(
     backgroundColor: Colors.white,
       appBar: AppBar(
@@ -168,12 +168,101 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                 fontWeight: FontWeight.w400
               ),
               ),
-              )
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 20,
+                  left: 50,
+                  right: 40
+                  ),
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text('Статистика за неделю'),
+                      SizedBox(width: 295,),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            ElevatedButton(onPressed: () {}, child: Text('Неделя')),
+                             ElevatedButton(onPressed: () {}, child: Text('Месяц')),
+                              ElevatedButton(onPressed: () {}, child: Text('Год')),
+                          ],
+                        )
+                        )
+                    ],
+                    ),
+                  ),
+                  
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 20,
+                  left: 50,
+                  right: 40
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(                      
+                      width: 125,
+                      height: 75,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.all(Radius.circular(5))
+                      ),
+                      child: Text('')
+                    ),
+                     Container(                      
+                      width: 125,
+                      height: 75,
+                      decoration: BoxDecoration(
+                         color: Colors.grey,
+                        borderRadius: BorderRadius.all(Radius.circular(5))
+                      ),
+                       child: Text(''),
+                    ),
+                     Container(                       
+                      width: 125,
+                      height: 75,
+                      decoration: BoxDecoration(
+                         color: Colors.grey,
+                        borderRadius: BorderRadius.all(Radius.circular(5))
+                      ),
+                       child: Text('Гачимучи'),
+                    ),
+                     Container(
+                      width: 125,
+                      height: 75,
+                      decoration: BoxDecoration(
+                         color: Colors.grey,
+                        borderRadius: BorderRadius.all(Radius.circular(5))
+                      ),
+                       child: Text('Гачимучи'),
+                    ),
+                  ],
+                ),
+                ),
           ],
         )
        ],
     ),
    );
    
+  }
+
+ int _statistickTodo (List<Todo> todo) {
+    int isCompletedTasks = 0;
+    for (int i = 0; i < todo.length; i++) {
+      if (todo[i].isCompleted == true) {
+       isCompletedTasks++;
+      } 
+    }
+   return isCompletedTasks;
   }
 }
