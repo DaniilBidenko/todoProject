@@ -1,27 +1,23 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:to_do/bloc/todo_bloc.dart';
-import 'package:to_do/bloc/todo_state.dart';
+import 'package:flutter/widgets.dart';
 import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/my_color/color.dart';
 import 'package:to_do/screens/add_todo_screen.dart';
 import 'package:to_do/screens/settings_screen.dart';
-import 'package:to_do/screens/statistick_todo_screen.dart';
 import 'package:to_do/screens/tasks_screen.dart';
-import 'package:to_do/widgets/new_todo_item.dart';
 
-class Homescreen extends StatefulWidget{ 
-  final Todo todo;
+class StatistickTodoScreen extends StatefulWidget {
+  final Todo? todo;
+  StatistickTodoScreen({Key? key, this.todo}) : super (key: key);
 
-  const Homescreen({Key? key, required this.todo}) : super(key: key); 
   @override
-
-  _HomescreenState createState() => _HomescreenState();
+  _StatistickTodoScreenState createState() => _StatistickTodoScreenState();
 }
 
-class _HomescreenState extends State<Homescreen> {
+class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
 
-  Key _listKey = UniqueKey();
+    Key _listKey = UniqueKey();
 
   late AppBarColors appBarColors;
   
@@ -40,10 +36,12 @@ class _HomescreenState extends State<Homescreen> {
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
+   return Scaffold(
+    backgroundColor: Colors.white,
       appBar: AppBar(
         title: Title(
           color: Colors.white,
@@ -142,55 +140,40 @@ class _HomescreenState extends State<Homescreen> {
           ),
             
           ),),
-      
-      body: RefreshIndicator(
-        // physics: const AlwaysScrollableScrollPhysics()
-        child: BlocBuilder<TodoBloc, TodoState>( // создаем BlocBuilder c расширениями TodoBloc и TodoState
-        builder: (context, state) {
-          if (state is TodoLoading) { // если состояние TodoLoading 
-            return Center(
-              child: CircularProgressIndicator(), // то по центру мы запускаем вращающийся кружок
-            );
-          } else if (state is TodoLoaded) { // если состояние TodoLoaded
-            return state.todos.isEmpty ? _buildEmptyState() : _buildTodoList(state); // возвращаем , если список пустой, говорим что задач пока нет иначе отображаем список задач
-          } else if (state is TodoError) { // если состояние TodoError
-            return Center(
-              child: Text('Ошибка загрузки'), // то возвращаем сообщение 
-            );
-          } else {
-            return const Center(
-              child: Text('Все пошло по бороде'),
-            );
-          }
-        }
-        ),
-        onRefresh: () async{
-          return Future<void>.delayed(const Duration(seconds: 3));
-        })
-      
-    );
-}
-
-  Widget _buildEmptyState () { // создаем виджет пустого состояния
-    return Center(
-      child: Text('Задач пока нет'),
-    );
+    body: ListView(
+       children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+             Padding(
+              padding: EdgeInsets.only(
+                top: 20,
+                left: 50
+              ),
+              child: Text('Статистика задач',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+              ),
+              Padding
+              (padding: EdgeInsets.only(
+                top: 5,
+                left: 50
+              ),
+              child: Text('Аналитика показателей эеффективности наших задач',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400
+              ),
+              ),
+              )
+          ],
+        )
+       ],
+    ),
+   );
+   
   }
- 
-  Widget _buildTodoList (TodoLoaded state) { // создаем виджет с параметром Todoloaded state
-    final todos = state.todos; // создаем переменную в которой будет список задач
-    return ListView.builder(
-      key: _listKey, // создаем прокручиваемый массив
-      itemCount: todos.length, // с числом строк равным длиннной нашего списка задач
-      itemBuilder: (context , index) { // itemBuilder с параметрами context и index
-        return TodoItem(
-          todo: todos[index],
-          key: ValueKey('todo_${todos[index].id}_${DateTime.now().millisecondsSinceEpoch}'),
-           // говорим что будет отображаться список задач по его indexy
-        );
-      }
-      );
-  }
-
-  
 }

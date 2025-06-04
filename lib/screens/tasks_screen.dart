@@ -7,36 +7,52 @@ import 'package:to_do/my_color/color.dart';
 import 'package:to_do/screens/add_todo_screen.dart';
 import 'package:to_do/screens/settings_screen.dart';
 import 'package:to_do/screens/statistick_todo_screen.dart';
-import 'package:to_do/screens/tasks_screen.dart';
 import 'package:to_do/widgets/new_todo_item.dart';
 
-class Homescreen extends StatefulWidget{ 
-  final Todo todo;
+Color changePriorityColor (String priorityValue) {
+  switch (priorityValue) {
+    case 'Низкий' :
+      return Colors.lightBlue;
+    case 'Средний' : 
+      return Colors.orangeAccent;
+    case 'Высокий' : 
+      return Colors.redAccent;
+    default :
+      return Colors.black;
+  } 
+ }
 
-  const Homescreen({Key? key, required this.todo}) : super(key: key); 
+class TasksScreen extends StatefulWidget{ 
+  final Todo? todo;
+
+  const TasksScreen({Key? key, this.todo}) : super(key: key); 
   @override
 
-  _HomescreenState createState() => _HomescreenState();
+  _TaskscreenState createState() => _TaskscreenState();
 }
 
-class _HomescreenState extends State<Homescreen> {
+class _TaskscreenState extends State<TasksScreen> {
 
   Key _listKey = UniqueKey();
 
   late AppBarColors appBarColors;
+  late TodoColor todoColor;
   
 
   @override
   void initState() {
     super.initState();
     appBarColors = AppBarColors();
+    todoColor = TodoColor();
     _loadColors();
   }
 
   Future<void> _loadColors() async{
     final colors = await AppBarColors.loadFromPrefs();
+    final newColor = await TodoColor.loadFromPrefs();
     setState(() {
       appBarColors = colors;
+      todoColor = newColor;
     });
   }
 
@@ -142,8 +158,7 @@ class _HomescreenState extends State<Homescreen> {
           ),
             
           ),),
-      
-      body: RefreshIndicator(
+          body: RefreshIndicator(
         // physics: const AlwaysScrollableScrollPhysics()
         child: BlocBuilder<TodoBloc, TodoState>( // создаем BlocBuilder c расширениями TodoBloc и TodoState
         builder: (context, state) {
@@ -191,6 +206,5 @@ class _HomescreenState extends State<Homescreen> {
       }
       );
   }
-
-  
-}
+    
+  }
