@@ -42,6 +42,12 @@ class _HomescreenState extends State<Homescreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double appBarButtonSize = width * 0.16;
+    double appBarButtonSizeHeight = height * 0.06;
+    double appBarTitle = width * 0.030;
+    double appBatText = width * 0.017;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -52,61 +58,68 @@ class _HomescreenState extends State<Homescreen> {
             children: [
               Text('Задачник',
         style: TextStyle(
-          fontSize: 24,
+          fontSize: appBarTitle,
           fontWeight: FontWeight.bold,
           color:  appBarColors.titleAppBarColor
         ),
         ),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            elevation: 0.0,
-            shadowColor: Colors.black,
-            backgroundColor: Colors.white,
+        Container(
+          width: appBarButtonSize,
+          height: appBarButtonSizeHeight,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10))
           ),
+        child: ElevatedButton(
+         style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
+         ),
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) => TasksScreen()
-              )).then((_) {
-                // После возвращения с экрана настроек, перезагружаем цвета
-                _loadColors();
-                setState(() {
-                  _listKey = UniqueKey();
-                });
-              });
+              ));
           }, 
           child: Text('Задачи',
           style: TextStyle(
-            color: appBarColors.buttonSettingsTextColor
+            color: appBarColors.buttonSettingsTextColor,
+            fontSize: appBatText
+          ),)
           ),
-          )),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            elevation: 0.0,
-            shadowColor: Colors.black,
-            backgroundColor: Colors.white,
+        ),
+         Container(
+          width: appBarButtonSize,
+          height: appBarButtonSizeHeight,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10))
           ),
+        child: ElevatedButton(
+         style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
+         ),
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) => SettingsScreen()
-              )).then((_) {
-                // После возвращения с экрана настроек, перезагружаем цвета
-                _loadColors();
-                setState(() {
-                  _listKey = UniqueKey();
-                });
-              });
+              ));
           }, 
-          child: Text('Настройки',
+          child: Text('Найстройки',
           style: TextStyle(
-            color: appBarColors.buttonSettingsTextColor
+            color: appBarColors.buttonSettingsTextColor,
+            fontSize: appBatText
+          ),)
           ),
-          )),
-          ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            elevation: 0.0,
-            shadowColor: Colors.black,
-            backgroundColor: Colors.white,
+        ),
+        Container(
+          width: appBarButtonSize,
+          height: appBarButtonSizeHeight,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10))
           ),
+        child: ElevatedButton(
+         style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
+         ),
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) => StatistickTodoScreen()
@@ -114,10 +127,14 @@ class _HomescreenState extends State<Homescreen> {
           }, 
           child: Text('Статистика',
           style: TextStyle(
-            color: appBarColors.buttonSettingsTextColor
+            color: appBarColors.buttonSettingsTextColor,
+            fontSize: appBatText
+          ),)
           ),
-          )),
+        ),
         Container(
+          width: appBarButtonSize,
+          height: appBarButtonSizeHeight,
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 3, 32, 248),
             borderRadius: BorderRadius.all(Radius.circular(10))
@@ -131,13 +148,13 @@ class _HomescreenState extends State<Homescreen> {
               builder: (context) => AddTodoScreen()
               ));
           }, 
-
           child: Text('+ Добавить задачу',
           style: TextStyle(
-            color: appBarColors.buttonAddedTextColor
+            color: appBarColors.buttonAddedTextColor,
+            fontSize: appBatText
           ),)
           ),
-        )
+        ),
             ]
           ),
             

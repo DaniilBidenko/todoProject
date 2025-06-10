@@ -47,13 +47,22 @@ class _TodoItemState extends State<TodoItem> {
 
   @override
   Widget build(BuildContext context) {
+     double width = MediaQuery.of(context).size.width;
+     double textPriority = width * 0.015;
+     double createdDate = width * 0.012;
+     double editData = width * 0.012;
+     double widthCard = width * 0.18;
+     double title = width * 0.015;
+     double description = width * 0.010;
+     double sizedBox = width * 0.005;
+     double icon = width * 0.02; 
     return Container(
       margin: EdgeInsets.symmetric( // внешних отступ
          horizontal: 24,
         vertical: 8
          ),
-      width: 40,
-      height: 75,
+      width: widthCard,
+      height: 85,
       decoration: BoxDecoration(
         color: Colors.red,
         border: Border(
@@ -89,7 +98,7 @@ class _TodoItemState extends State<TodoItem> {
   }),
               ),
               SizedBox(
-                width: 15,
+                width:sizedBox,
               ),
               Expanded(
                 child: Row(
@@ -99,11 +108,12 @@ class _TodoItemState extends State<TodoItem> {
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(widget.todo.name,
                       style: TextStyle(
                         color: todoColor.titleColor,
-                      fontSize: 16,
+                      fontSize: title,
                       fontWeight: FontWeight.bold,
                       decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null,
                        // если задача выполнена то зачернки линией текст иначе ничего
@@ -115,7 +125,7 @@ class _TodoItemState extends State<TodoItem> {
                         padding: EdgeInsets.only(top: 4),
                         child: Text(widget.todo.description,
                         style: TextStyle(
-                          fontSize: 10,
+                          fontSize: description,
                           color: todoColor.descriptionColor,
                           decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null // если задача выполнена зачеркни описание линией иначе ничего
                         ),
@@ -129,34 +139,21 @@ class _TodoItemState extends State<TodoItem> {
                           children: [
                             Expanded(
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                             widget.todo.valueDropDown,
                             style: TextStyle(
+                              fontSize: textPriority,
                               color: changePriorityColor(widget.todo.valueDropDown),
                               // decoration: todo.valueDropDown ? TextDecoration.lineThrough : null
                               ),
-                          ),
-                          ElevatedButton(
-                           onPressed: _loadColors,
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0.0,
-                              shadowColor: Colors.transparent,
-                              padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                              textStyle: TextStyle(fontSize: 12), 
-                              minimumSize: Size.zero, 
-                              ),
-                          child: Text('Применить настройки',
-                          style: TextStyle(
-                            color: Colors.black
-                          ),),
                           ),
                                 ]
                               )
                               ),
                             SizedBox(
-                              width: 25
+                              width: sizedBox
                             ),
                             Expanded(
                       child: Column(
@@ -170,7 +167,7 @@ class _TodoItemState extends State<TodoItem> {
                         padding: EdgeInsets.only(top: 4),
                         child: Text(' ${DateFormat('yyyy-MM-dd').format(widget.todo.createdAt)}', // обращаем к классу и выбираем поле дата создания с типом данных DateTime
                         style: TextStyle(
-                          fontSize: 10,
+                          fontSize: createdDate,
                           color: todoColor.createdData,
                           decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null
                         ),
@@ -182,7 +179,7 @@ class _TodoItemState extends State<TodoItem> {
                         child: widget.todo.editAt 
                         ? Text(' ${DateFormat('yyyy-MM-dd').format(DateTime.now())}' ,// обращаем к классу и выбираем поле дата создания с типом данных DateTime
                         style: TextStyle(
-                          fontSize: 10,
+                          fontSize: editData,
                           color: todoColor.createdData,
                           decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null
                         ),
@@ -192,7 +189,7 @@ class _TodoItemState extends State<TodoItem> {
                       )
                       ),
                       SizedBox(
-                        width: 15,
+                        width: sizedBox,
                       ),
                             IconButton(
                         padding: EdgeInsets.all(2),
@@ -200,7 +197,7 @@ class _TodoItemState extends State<TodoItem> {
                         onPressed: () {
                           context.read<TodoBloc>().add(DeleteTodo(widget.todo.id)); // отправляем событие в блок для уделания задачи
                         }, 
-                        icon: Icon(Icons.delete_forever_outlined, size: 20, color: todoColor.iconDeleteColor,), // значок удаления
+                        icon: Icon(Icons.delete_forever_outlined, size: icon, color: todoColor.iconDeleteColor,), // значок удаления
                         ),
                         IconButton(
                           padding: EdgeInsets.all(2),
@@ -211,7 +208,7 @@ class _TodoItemState extends State<TodoItem> {
                               builder: (context) => EditTodoScreen(todo: widget.todo)
                               ));
                           }, 
-                          icon: Icon(Icons.edit_document, size: 20, color: todoColor.iconTaskColor,))
+                          icon: Icon(Icons.edit_document, size: icon, color: todoColor.iconTaskColor,))
                           ],
                         )
                         ),                                             
