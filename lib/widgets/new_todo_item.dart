@@ -30,7 +30,6 @@ class TodoItem extends StatefulWidget {
 
 class _TodoItemState extends State<TodoItem> {
   late TodoColor todoColor;
-
   @override
   void initState() {
     super.initState();
@@ -56,13 +55,15 @@ class _TodoItemState extends State<TodoItem> {
      double description = width * 0.010;
      double sizedBox = width * 0.005;
      double icon = width * 0.02; 
+     double height = MediaQuery.of(context).size.height;
+     double cardHeight = height * 0.13;
     return Container(
       margin: EdgeInsets.symmetric( // внешних отступ
          horizontal: 24,
         vertical: 8
          ),
       width: widthCard,
-      height: 85,
+      height: cardHeight,
       decoration: BoxDecoration(
         color: Colors.red,
         border: Border(
@@ -119,7 +120,6 @@ class _TodoItemState extends State<TodoItem> {
                        // если задача выполнена то зачернки линией текст иначе ничего
                     ),
                     ),
-                    
                     if (widget.todo.description.isNotEmpty) 
                       Padding(
                         padding: EdgeInsets.only(top: 4),
@@ -173,11 +173,10 @@ class _TodoItemState extends State<TodoItem> {
                         ),
                         ),
                         ),
-                        
                         Padding(
                         padding: EdgeInsets.only(top: 4),
-                        child: widget.todo.editAt 
-                        ? Text(' ${DateFormat('yyyy-MM-dd').format(DateTime.now())}' ,// обращаем к классу и выбираем поле дата создания с типом данных DateTime
+                        child: widget.todo.editAt ? 
+                        Text(' ${DateFormat('yyyy-MM-dd').format(DateTime.now())}' ,// обращаем к классу и выбираем поле дата создания с типом данных DateTime
                         style: TextStyle(
                           fontSize: editData,
                           color: todoColor.createdData,

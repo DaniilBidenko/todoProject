@@ -12,19 +12,13 @@ import 'package:to_do/widgets/new_todo_item.dart';
 
 class Homescreen extends StatefulWidget{ 
   final Todo todo;
-
   const Homescreen({Key? key, required this.todo}) : super(key: key); 
   @override
-
   _HomescreenState createState() => _HomescreenState();
 }
-
 class _HomescreenState extends State<Homescreen> {
-
   Key _listKey = UniqueKey();
-
   late AppBarColors appBarColors;
-  
 
   @override
   void initState() {
@@ -80,13 +74,14 @@ class _HomescreenState extends State<Homescreen> {
               ));
           }, 
           child: Text('Задачи',
-          style: TextStyle(
-            color: appBarColors.buttonSettingsTextColor,
-            fontSize: appBatText
-          ),)
-          ),
+            style: TextStyle(
+              color: appBarColors.buttonSettingsTextColor,
+              fontSize: appBatText
+            ),
+          )
         ),
-         Container(
+        ),
+        Container(
           width: appBarButtonSize,
           height: appBarButtonSizeHeight,
           decoration: BoxDecoration(
@@ -103,10 +98,11 @@ class _HomescreenState extends State<Homescreen> {
               ));
           }, 
           child: Text('Найстройки',
-          style: TextStyle(
+            style: TextStyle(
             color: appBarColors.buttonSettingsTextColor,
             fontSize: appBatText
-          ),)
+            ),
+          )
           ),
         ),
         Container(
@@ -158,7 +154,8 @@ class _HomescreenState extends State<Homescreen> {
             ]
           ),
             
-          ),),
+        ),
+      ),
       
       body: RefreshIndicator(
         // physics: const AlwaysScrollableScrollPhysics()
@@ -184,7 +181,6 @@ class _HomescreenState extends State<Homescreen> {
         onRefresh: () async{
           return Future<void>.delayed(const Duration(seconds: 3));
         })
-      
     );
 }
 
@@ -208,7 +204,4 @@ class _HomescreenState extends State<Homescreen> {
       }
       );
   }
-   
-
-  
 }

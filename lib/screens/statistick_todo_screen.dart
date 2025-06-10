@@ -64,390 +64,331 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
           color: Colors.white,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Задачник',
-        style: TextStyle(
-          fontSize: appBarTitle,
-          fontWeight: FontWeight.bold,
-          color:  appBarColors.titleAppBarColor
-        ),
-        ),
-        Container(
-          width: appBarButtonSize,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10))
-          ),
-        child: ElevatedButton(
-         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
-         ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => TasksScreen()
-              ));
-          }, 
-          child: Text('Задачи',
-          style: TextStyle(
-            color: appBarColors.buttonSettingsTextColor,
-            fontSize: appBatText
-          ),)
-          ),
-        ),
-         Container(
-          width: appBarButtonSize,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10))
-          ),
-        child: ElevatedButton(
-         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
-         ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => SettingsScreen()
-              ));
-          }, 
-          child: Text('Найстройки',
-          style: TextStyle(
-            color: appBarColors.buttonSettingsTextColor,
-            fontSize: appBatText
-          ),)
-          ),
-        ),
-        Container(
-          width: appBarButtonSize,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10))
-          ),
-        child: ElevatedButton(
-         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
-         ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => StatistickTodoScreen()
-              ));
-          }, 
-          child: Text('Статистика',
-          style: TextStyle(
-            color: appBarColors.buttonSettingsTextColor,
-            fontSize: appBatText
-          ),)
-          ),
-        ),
-        Container(
-          width: appBarButtonSize,
-          height: 40,
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 3, 32, 248),
-            borderRadius: BorderRadius.all(Radius.circular(10))
-          ),
-        child: ElevatedButton(
-         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 3, 32, 248)),
-         ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => AddTodoScreen()
-              ));
-          }, 
-          child: Text('+ Добавить задачу',
-          style: TextStyle(
-            color: appBarColors.buttonAddedTextColor,
-            fontSize: appBatText
-          ),)
-          ),
-        ),
-            ]
-          ),
-            
-          ),),
-
-    body: ListView(
-       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-             Padding(
-              padding: EdgeInsets.only(
-                top: 20,
-                left: 50
-              ),
-              child: Text('Статистика задач',
-                style: TextStyle(
-                  fontSize: staticTast,
-                  fontWeight: FontWeight.bold
+              children: [
+                Text('Задачник',
+                  style: TextStyle(
+                    fontSize: appBarTitle,
+                    fontWeight: FontWeight.bold,
+                    color:  appBarColors.titleAppBarColor
+                    ),
                 ),
-              ),
-              ),
-              Padding
-              (padding: EdgeInsets.only(
-                top: 5,
-                left: 50
-              ),
-              child: Text('Аналитика показателей эеффективности наших задач',
-              style: TextStyle(
-                fontSize: analitik,
-                fontWeight: FontWeight.w400
-              ),
-              ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 10,
-                  left: 50,
-                  right: 40
-                  ),
-                  child: Container(
+                  Container(
+                    width: appBarButtonSize,
                     height: 40,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderRadius: BorderRadius.all(Radius.circular(10))
                     ),
-                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
+                        ),
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => TasksScreen()
+                        ));
+                      }, 
+                      child: Text('Задачи',
+                        style: TextStyle(
+                        color: appBarColors.buttonSettingsTextColor,
+                        fontSize: appBatText
+                        ),
+                      )
+                    ),
+                  ),
+                    Container(
+                      width: appBarButtonSize,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                      ),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
+                      ),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => SettingsScreen()
+                      ));
+                    }, 
+                    child: Text('Найстройки',
+                      style: TextStyle(
+                        color: appBarColors.buttonSettingsTextColor,
+                        fontSize: appBatText
+                      ),
+                    )
+                    ),
+                    ),
+                      Container(
+                        width: appBarButtonSize,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
+                          ),
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => StatistickTodoScreen()
+                          ));
+                        }, 
+                        child: Text('Статистика',
+                        style: TextStyle(
+                          color: appBarColors.buttonSettingsTextColor,
+                          fontSize: appBatText
+                          ),
+                        )
+                        ),
+                      ),
+                        Container(
+                          width: appBarButtonSize,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 3, 32, 248),
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 3, 32, 248)),
+                              ),
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => AddTodoScreen()
+                                ));
+                              }, 
+                            child: Text('+ Добавить задачу',
+                              style: TextStyle(
+                                color: appBarColors.buttonAddedTextColor,
+                                fontSize: appBatText
+                              ),
+                            )
+                          ),
+                        ),
+              ]
+          ),
+        ),
+      ),
+        body: ListView(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 20,
+                  left: 50
+                ),
+                child: Text('Статистика задач',
+                  style: TextStyle(
+                    fontSize: staticTast,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 5,
+                    left: 50
+                  ),
+                child: Text('Аналитика показателей эеффективности наших задач',
+                  style: TextStyle(
+                    fontSize: analitik,
+                    fontWeight: FontWeight.w400
+                  ),
+                ),
+              ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    left: 50,
+                    right: 40
+                  ),
+                child: Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Статистика за неделю',
-                      style: TextStyle(
-                        fontSize: staticDay
+                        style: TextStyle(
+                          fontSize: staticDay
+                        ),
                       ),
-                      ),
-                      SizedBox(width: sizedBox,),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
+                        SizedBox(width: sizedBox),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                width: dayContainer,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                                      if (states.contains(MaterialState.hovered)) {
+                                        return Colors.blue; 
+                                      }
+                                        return Colors.white; 
+                                    }),
+                                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5)
+                                      ))
+                                  ),
+                                    onPressed: () {}, 
+                                      child: Text('Неделя',
+                                        style: TextStyle(
+                                          fontSize: dayContainerText
+                                        ),
+                                      )
+                                ),
+                              ),
                             Container(
                               width: dayContainer,
-                              child: ElevatedButton(
-                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-                                   if (states.contains(MaterialState.hovered)) {
-            return Colors.blue; 
-          }
-          return Colors.white; 
-                                }),
-                                shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5)
-                                ))
-                              ),
-                              onPressed: () {}, 
-                              child: Text('Неделя',
-                              style: TextStyle(
-                                fontSize: dayContainerText
-                              ),
-                              )
-                              ),
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                                      if (states.contains(MaterialState.hovered)) {
+                                        return Colors.blue; 
+                                      } 
+                                        return Colors.white; 
+                                    }),
+                                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5)
+                                      ))
+                                  ),
+                                onPressed: () {}, 
+                                  child: Text('Месяц',
+                                    style: TextStyle(
+                                      fontSize: dayContainerText
+                                    ),
+                                  )
+                                ),
                             ),
                             Container(
                               width: dayContainer,
-                              child: ElevatedButton(
-                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-                                   if (states.contains(MaterialState.hovered)) {
-            return Colors.blue; 
-          }
-          return Colors.white; 
-                                }),
-                                shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5)
-                                ))
-                              ),
-                              onPressed: () {}, 
-                              child: Text('Месяц',
-                              style: TextStyle(
-                                fontSize: dayContainerText
-                              ),
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                                      if (states.contains(MaterialState.hovered)) {
+                                        return Colors.blue; 
+                                      }
+                                        return Colors.white; 
+                                    }),
+                                      shape: WidgetStateProperty.all(RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5)
+                                      ))
+                                  ),
+                                    onPressed: () {}, 
+                                      child: Text('Год',
+                                        style: TextStyle(
+                                          fontSize: dayContainerText
+                                        ),
                               )
                               ),
                             ),
-                            Container(
-                              width: dayContainer,
-                              child: ElevatedButton(
-                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-                                   if (states.contains(MaterialState.hovered)) {
-            return Colors.blue; 
-          }
-          return Colors.white; 
-                                }),
-                                shape: WidgetStateProperty.all(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5)
-                                ))
-                              ),
-                              onPressed: () {}, 
-                              child: Text('Год',
-                              style: TextStyle(
-                                fontSize: dayContainerText
-                              ),
-                              )
-                              ),
-                            ),
-                            
                           ],
                         )
                         )
                     ],
                     ),
                   ),
-                  
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 15,
-                  left: 50,
-                  right: 40
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(                      
-                      width: containersSize,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              top: 5,
-                              left: 0
-                            ),
-                            child: Icon(
-                            Icons.four_mp_sharp,
-                            size: vsegoZadach,
-                          ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              top: 0,
-                              left: 0
-                            ),
-                            child: Expanded(
-                            child: Column(
-                              children: [
-                                Padding(
-                            padding: EdgeInsets.only(
-                              top: 5,
-                              left: 0
-                            ),
-                            child: Text('Всего задач :',
-                            style: TextStyle(
-                              fontSize: vsegoZadach
-                            ),),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                              ),
-                              child: BlocBuilder<TodoBloc, TodoState>(
-                                builder: (context, state) {
-                                  if (state is TodoLoading) {
-                                    return CircularProgressIndicator();
-                                  } else if (state is TodoLoaded) {
-                                    return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : getListTodo(state);
-                                  } else if (state is TodoError) {
-                                    return Center(
-                                      child: Text('ошибка загрузки'),
-                                    );
-                                  } else {
-                                    return const Center(
-                                      child: Text('Все пошло по бороде'),
-                                    );
-                                  }
-                                }
-                                )
-                              )
-                              ],
-                            )
-                            ),
-                            )
-                        ],
-                      )
-                    ),
-                     Container(                      
-                      width: containersSize,
-                      height: 50,
-                      decoration: BoxDecoration(
-                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))
-                      ),
-                       child: BlocBuilder<TodoBloc, TodoState>(
-                                builder: (context, state) {
-                                  if (state is TodoLoading) {
-                                    return CircularProgressIndicator();
-                                  } else if (state is TodoLoaded) {
-                                    return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : getCompletedListTodo(state);
-                                  } else if (state is TodoError) {
-                                    return Center(
-                                      child: Text('ошибка загрузки'),
-                                    );
-                                  } else {
-                                    return const Center(
-                                      child: Text('Все пошло по бороде'),
-                                    );
-                                  }
-                                }
-                                )
-                    ),
-                     Container(                       
-                      width: containersSize,
-                      height: 50,
-                      decoration: BoxDecoration(
-                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))
-                      ),
-                       child: Text('Гачимучи'),
-                    ),
-                     Container(
-                      width: containersSize,
-                      height: 50,
-                      decoration: BoxDecoration(
-                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))
-                      ),
-                       child: Text('Гачимучи'),
-                    ),
-                  ],
-                ),
-                ),
                 Padding(
                   padding: EdgeInsets.only(
-                    top: 20,
-                    left: 50
+                    top: 15,
+                    left: 50,
+                    right: 40
                   ),
-                  child: Container(
-                    color: Colors.yellow,
-                    height: 200,
-                    width: 200,
-                    child: SizedBox(
-                      height: 150,
-                      width: 200,
-                      child: PieChart(
-            PieChartData(
-              sections: [
-                PieChartSectionData(
-                value: 7,
-                color: Colors.green
-              ),
-              PieChartSectionData(
-                value: 10,
-                color: Colors.orange
-              )
-              ],
-              sectionsSpace: 5,
-              centerSpaceRadius: 40
-            )
-          ),
-                    )
-                  ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(                      
+                            width: containersSize,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(5))
+                            ),
+                          ),
+                            Container(                      
+                              width: containersSize,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(Radius.circular(5))
+                              ),
+                                child: BlocBuilder<TodoBloc, TodoState>(
+                                  builder: (context, state) {
+                                    if (state is TodoLoading) {
+                                      return CircularProgressIndicator();
+                                    } else if (state is TodoLoaded) {
+                                      return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : getCompletedListTodo(state);
+                                    } else if (state is TodoError) {
+                                      return Center(
+                                        child: Text('ошибка загрузки'),
+                                      );
+                                    } else {
+                                      return const Center(
+                                        child: Text('Все пошло по бороде'),
+                                      );
+                                    }
+                                  }
+                                )
+                            ),
+                              Container(                       
+                                width: containersSize,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(Radius.circular(5))
+                                ),
+                                child: Text('Гачимучи'),
+                              ),
+                                Container(
+                                  width: containersSize,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.all(Radius.circular(5))
+                                  ),
+                                    child: Text('Гачимучи'),
+                                ),
+                        ],
+                    ),
+                ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 20,
+                      left: 50
+                    ),
+                      child: Container(
+                        color: Colors.yellow,
+                        height: 200,
+                        width: 200,
+                          child: BlocBuilder<TodoBloc, TodoState>(
+                            builder: (context, state) {
+                              if (state is TodoLoading) {
+                                return CircularProgressIndicator();
+                              } else if (state is TodoLoaded) {
+                                return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : getDiagrammStatistick(state);
+                              } else if (state is TodoError) {
+                                return Center(
+                                  child: Text('ошибка загрузки'),
+                                );
+                              } else {
+                                return const Center(
+                                  child: Text('Все пошло по бороде'),
+                                );
+                              }
+                            }
+                          )
+                      )
                   )
           ],
         )
@@ -468,65 +409,99 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
     return isCompletedTasks;
   }
  
- Widget getListTodo (TodoLoaded state) {
-  final todos = state.todos;
-  return  Container(                      
+        Widget getListTodo (TodoLoaded state) {
+          final todos = state.todos;
+            return Container(                      
                       width: 100,
                       height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(5))
                       ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              top: 5,
-                              left: 0
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: 5,
+                                left: 0
+                              ),
+                                child: Icon(
+                                  Icons.four_mp_sharp,
+                                  size: 20,
+                                ),
                             ),
-                            child: Icon(
-                            Icons.four_mp_sharp,
-                            size: 20,
-                          ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              top: 0,
-                              left: 0
-                            ),
-                            child: Expanded(
-                            child: Column(
-                              children: [
-                                Padding(
-                            padding: EdgeInsets.only(
-                              top: 5,
-                              left: 0
-                            ),
-                            child: Text('Всего задач : ${todos.length}',
-                            style: TextStyle(
-                              fontSize: 20
-                            ),),
-                            ),
-                              ],
-                            )
-                            ),
-                            )
-                        ],
-                      )
-                    );
-                
- }
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: 0,
+                                  left: 0
+                                ),
+                                  child: Expanded(
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 5,
+                                            left: 0
+                                          ),
+                                        child: Text('Всего задач : ${todos.length}',
+                                          style: TextStyle(
+                                            fontSize: 20
+                                          ),
+                                        ),
+                                        ),
+                                      ],
+                                    )
+                                  ),
+                              )
+                          ],
+                        )
+                      );         
+          }
 
  Widget getCompletedListTodo (TodoLoaded state) {
   final todos = state.todos;
   return Container(                      
-                      width: 100,
-                      height: 50,
-                      decoration: BoxDecoration(
-                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(5))
-                      ),
-                       child: Text('Выполнено задач : ${todos[].isCompleted}'),
-                    );
+            width: 100,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(5))
+            ),
+              child: Text('Выполнено задач : ${todos.where((todos) => todos.isCompleted).length }'),
+    );
  }
+ Widget getDiagrammStatistick (TodoLoaded state) {
+  final todos =  state.todos;
+  return Padding(
+            padding: EdgeInsets.only(
+              top: 20,
+              left: 50
+            ),
+              child: Container(
+                color: Colors.yellow,
+                height: 200,
+                width: 200,
+                  child: SizedBox(
+                    height: 150,
+                    width: 200,
+                      child: PieChart(
+                        PieChartData(
+                          sections: [
+                            PieChartSectionData(
+                              value: todos.length.toDouble(),
+                              color: Colors.green
+                            ),
+                              PieChartSectionData(
+                                value: todos.where((todos) => todos.isCompleted).length.toDouble(),
+                                color: Colors.orange
+                              )
+                          ],
+                        sectionsSpace: 5,
+                        centerSpaceRadius: 40
+                        )
+                      ),
+                  )
+              ),
+          );
+    }
 }

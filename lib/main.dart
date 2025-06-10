@@ -16,7 +16,6 @@ void main () async{
 
 class MyApp extends StatelessWidget {
 final Todo todo;
-
   MyApp({Key? key, required this.todo, }) : super(key: key);
 
   @override

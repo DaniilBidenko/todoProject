@@ -82,24 +82,6 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                   border: OutlineInputBorder()
                 ),
               ),
-              // TextFormField(
-              //   autovalidateMode: AutovalidateMode.always,
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Пожалуйста введите заголовок';
-              //     } 
-              //     return null;
-              //   },
-              //   onSaved: (value) => header = value,
-              //    style: TextStyle(
-              //     fontSize: myFontSize,
-              //   ),
-              //   controller: _titleController, // исользуем нашу переменную для сохранения заголовка
-              //   decoration: InputDecoration(
-              //     labelText: 'Заголовок',
-              //     border: OutlineInputBorder()
-              //   ),
-              // ),
               SizedBox(
                 height: 16, // отступ между элементами
               ),
@@ -124,12 +106,11 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
               SizedBox(
                 height: 24, // отступ между элементами
               ),
-             Container(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 13),
-              // height: height * 0.07,
-              width: width * 0.98,
-              decoration: BoxDecoration(
-                border: Border.all(
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 13),
+                width: width * 0.98,
+                decoration: BoxDecoration(
+                  border: Border.all(
                   width: 1,
                   color: Colors.grey.shade600
                 ),

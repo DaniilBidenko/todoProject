@@ -6,7 +6,6 @@ import 'package:to_do/bloc/todo_event.dart';
 import 'package:to_do/data/model/todo.dart';
 
 const List<String> priority = ['Низкий', 'Средний', 'Высокий'];
-
  Color changePriorityColor (String priorityValue) {
   switch (priorityValue) {
     case 'Низкий' :
@@ -19,16 +18,12 @@ const List<String> priority = ['Низкий', 'Средний', 'Высокий
       return Colors.black;
   } 
  }
-
 class EditTodoScreen extends StatefulWidget{
   final Todo todo;
-  
   EditTodoScreen({Key? key, required this.todo}) : super (key: key) ;
-  
   @override
   _EditTodoScreenState createState() => _EditTodoScreenState();
 }
-
 class _EditTodoScreenState extends State<EditTodoScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
@@ -40,8 +35,6 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
   DateTime? _editTime;
   String? formatDate;
   String choosePriority = priority.first;
-  
-  
   @override
   void initState() {
     // _titleController = TextEditingController(text: widget.todo.title);
@@ -50,7 +43,6 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
     _editTime = widget.todo.createdAt;
     formatDate = DateFormat('yyyy-MM-dd').format(_editTime!);
   }
-
   @override
   void dispose () {
     // _titleController.dispose();
@@ -58,7 +50,6 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
     _nameController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -91,21 +82,6 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
               SizedBox (
                 height: 16
               ),
-              // TextFormField(
-              //   autovalidateMode: AutovalidateMode.always,
-              //   validator: (value) {
-              //     if (value == null || value.isEmpty) {
-              //       return 'Пожалуйста введите заголовок';
-              //     } 
-              //     return null;
-              //   },
-              //   onSaved: (value) => header = value,
-              //   controller: _titleController,
-              //   decoration: InputDecoration(
-              //     labelText: 'Заголовок',
-              //     border: OutlineInputBorder()
-              //   ),
-              // ),
               SizedBox(
                 height: 16,
               ),
@@ -141,11 +117,11 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
               child: GestureDetector(
                 onTap: () => _selectDate(context),
                 child: Text(
-                _editTime == null ? 'Выберите дату' :  DateFormat('yyyy-MM-dd').format(_editTime!),
+                  _editTime == null ? 'Выберите дату' :  DateFormat('yyyy-MM-dd').format(_editTime!),
                 style: TextStyle(
                   color: Colors.grey.shade700,
-                fontSize: myFontSize,
-                fontWeight: FontWeight.normal
+                  fontSize: myFontSize,
+                  fontWeight: FontWeight.normal
                 )
                 ),
               ),
@@ -154,47 +130,23 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
                 height: 16,
               ),
               DropdownButton<String>(
-      value: choosePriority,
-      elevation: 16,
-      style: TextStyle(color: changePriorityColor(choosePriority)),
-      underline: Container(height: 2, color: Colors.black),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          choosePriority = value!;
-        });
-      },
-      items:
-          priority.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(value: value, child: Text(value));
-          }).toList(),
-    ),
-            //   Container(
-            //   padding: EdgeInsets.symmetric(vertical: 8, horizontal: 13),
-            //   // height: height * 0.07,
-            //   width: width * 0.98,
-            //   decoration: BoxDecoration(
-            //     border: Border.all(
-            //       width: 1,
-            //       color: Colors.grey.shade600
-            //     ),
-            //     borderRadius: BorderRadius.all(Radius.circular(5)),
-            //   ),
-            //   child: GestureDetector(
-            //     onTap: () => _editDate(context),
-            //     child: Text(
-            //     _dateTime == null ? 'Дата редактирования' : _dateTime.toString(),
-            //     style: TextStyle(
-            //       color: Colors.grey.shade700,
-            //     fontSize: myFontSize,
-            //     fontWeight: FontWeight.normal
-            //     )
-            //     ),
-            //   ),
-            //  ),
-             SizedBox(
-              height: 50,
-             ),
+                value: choosePriority,
+                elevation: 16,
+                style: TextStyle(color: changePriorityColor(choosePriority)),
+                underline: Container(height: 2, color: Colors.black),
+                  onChanged: (String? value) {
+                    setState(() {
+                    choosePriority = value!;
+                    });
+                  },
+                    items:
+                      priority.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(value: value, child: Text(value));
+                      }).toList(),
+               ),
+              SizedBox(
+                height: 50,
+              ),
               ElevatedButton(
                 onPressed: _updateTodo,
                 child: Text('Сохранить изменения'))
@@ -211,7 +163,6 @@ class _EditTodoScreenState extends State<EditTodoScreen> {
       Navigator.pop(context);
     }
   }
-
   Future _selectDate (BuildContext context) async{
      DateTime? editTime = await showDatePicker(
       context: context, 
