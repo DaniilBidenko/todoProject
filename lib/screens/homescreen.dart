@@ -8,6 +8,7 @@ import 'package:to_do/screens/add_todo_screen.dart';
 import 'package:to_do/screens/settings_screen.dart';
 import 'package:to_do/screens/statistick_todo_screen.dart';
 import 'package:to_do/screens/tasks_screen.dart';
+import 'package:to_do/widgets/app_bar_widget.dart';
 import 'package:to_do/widgets/new_todo_item.dart';
 
 class Homescreen extends StatefulWidget{ 
@@ -36,124 +37,28 @@ class _HomescreenState extends State<Homescreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    double appBarButtonSize = width * 0.16;
-    double appBarButtonSizeHeight = height * 0.06;
-    double appBarTitle = width * 0.030;
-    double appBatText = width * 0.017;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Title(
           color: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Задачник',
-        style: TextStyle(
-          fontSize: appBarTitle,
-          fontWeight: FontWeight.bold,
-          color:  appBarColors.titleAppBarColor
-        ),
-        ),
-        Container(
-          width: appBarButtonSize,
-          height: appBarButtonSizeHeight,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10))
-          ),
-        child: ElevatedButton(
-         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
-         ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => TasksScreen()
-              ));
-          }, 
-          child: Text('Задачи',
-            style: TextStyle(
-              color: appBarColors.buttonSettingsTextColor,
-              fontSize: appBatText
-            ),
-          )
-        ),
-        ),
-        Container(
-          width: appBarButtonSize,
-          height: appBarButtonSizeHeight,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10))
-          ),
-        child: ElevatedButton(
-         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
-         ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => SettingsScreen()
-              ));
-          }, 
-          child: Text('Найстройки',
-            style: TextStyle(
-            color: appBarColors.buttonSettingsTextColor,
-            fontSize: appBatText
-            ),
-          )
-          ),
-        ),
-        Container(
-          width: appBarButtonSize,
-          height: appBarButtonSizeHeight,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10))
-          ),
-        child: ElevatedButton(
-         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 243, 243, 245)),
-         ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => StatistickTodoScreen()
-              ));
-          }, 
-          child: Text('Статистика',
-          style: TextStyle(
-            color: appBarColors.buttonSettingsTextColor,
-            fontSize: appBatText
-          ),)
-          ),
-        ),
-        Container(
-          width: appBarButtonSize,
-          height: appBarButtonSizeHeight,
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 3, 32, 248),
-            borderRadius: BorderRadius.all(Radius.circular(10))
-          ),
-        child: ElevatedButton(
-         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 3, 32, 248)),
-         ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => AddTodoScreen()
-              ));
-          }, 
-          child: Text('+ Добавить задачу',
-          style: TextStyle(
-            color: appBarColors.buttonAddedTextColor,
-            fontSize: appBatText
-          ),)
-          ),
-        ),
-            ]
-          ),
-            
+          child: BlocBuilder<TodoBloc, TodoState>(
+                            builder: (context, state) {
+                              if (state is TodoLoading) {
+                                return CircularProgressIndicator();
+                              } else if (state is TodoLoaded) {
+                                return state.todos.isEmpty ? Text('Произошла ошибка загрузки') : appBar(state);
+                              } else if (state is TodoError) {
+                                return Center(
+                                  child: Text('ошибка загрузки'),
+                                );
+                              } else {
+                                return const Center(
+                                  child: Text('Все пошло по бороде'),
+                                );
+                              }
+                            }
+                          )
         ),
       ),
       
@@ -204,4 +109,10 @@ class _HomescreenState extends State<Homescreen> {
       }
       );
   }
+
+  Widget appBar (TodoLoaded state) {
+      final todos = state.todos;
+      return AppBarWidget(
+      );
+    }
 }

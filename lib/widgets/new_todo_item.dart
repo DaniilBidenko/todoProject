@@ -92,11 +92,11 @@ class _TodoItemState extends State<TodoItem> {
                 context.read<TodoBloc>().add(ToggleTodoStatus(widget.todo.id)); //   отправляем событие в блок для изменения статуса задачи
               },
               fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-    if (states.contains(MaterialState.selected)) {
-      return todoColor.iconTaskColor; 
-    }
-    return todoColor.iconTaskColor; 
-  }),
+                if (states.contains(MaterialState.selected)) {
+                  return todoColor.iconTaskColor; 
+                }
+                  return todoColor.iconTaskColor; 
+                }),
               ),
               SizedBox(
                 width:sizedBox,
