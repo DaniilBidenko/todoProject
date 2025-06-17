@@ -4,7 +4,6 @@ import 'package:uuid/uuid.dart';
 class Todo extends Equatable {
   final String name;
   final String id;
-  // final String title;
   final String description;
   final DateTime createdAt;
   final bool isCompleted;
@@ -15,7 +14,6 @@ class Todo extends Equatable {
   Todo({
     required this.name,
     String? id,
-    // required this.title,
     this.description = '',
     DateTime? createdAt,
     this.isCompleted = false,
@@ -41,7 +39,6 @@ class Todo extends Equatable {
     return Todo(
       name: name ?? this.name,
       id: id,
-      // title: title ?? this.title,
       description: description ?? this.description,
       createdAt: createdAt ,
       isCompleted: isCompleted ?? this.isCompleted ,
@@ -55,7 +52,6 @@ class Todo extends Equatable {
     return {
       'name': name,
       'id': id,
-      // 'title': title,
       'description': description,
       'createdAt': createdAt.toIso8601String(), // формат времени
       'isCompleted': isCompleted,
@@ -69,7 +65,6 @@ class Todo extends Equatable {
     return Todo(
       name: json['name'] as String,
       id: json['id'] as String,
-      // title: json['title'] as String,
       description: json['description'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       isCompleted: json['isCompleted'] as bool,
@@ -83,7 +78,6 @@ class Todo extends Equatable {
   List<Object?> get props => [
     name,
     id,
-    // title,
     description,
     createdAt,
     isCompleted,

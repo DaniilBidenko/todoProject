@@ -20,7 +20,7 @@ class TodoRepository {
   Future<void> addTodo (Todo todo) async {
     final prefs = await SharedPreferences.getInstance(); // инициалиpируем запрос на локальное хранилище
     final todosJson = prefs.getStringList(_todosKey) ?? []; // если локальное хранилище с ключом todoskey пустое, вернет пустой массив иначе вернет массив наших задач
-
+    
     todosJson.add(jsonEncode(todo.toJson()));  //  мы получаем наши данные в параметр todo, todo превращаем в json а json мы кодируем
 
     await prefs.setStringList(_todosKey, todosJson); // сохраняет наше локальное хранилище
@@ -29,7 +29,6 @@ class TodoRepository {
   Future<void> deleteTodo (String id) async {
    final prefs = await SharedPreferences.getInstance();
    final todosJson = prefs.getStringList(_todosKey) ?? [];
-
    final index = _findTodoIndexById(todosJson, id); // функция поиска id
   // сравниваем наш поиск и если он равен тому что мы выбрали то удаляем его
    if (index != -1) { 
@@ -41,7 +40,6 @@ class TodoRepository {
   Future<void> toggleTodoStatus (String id) async {
     final prefs = await SharedPreferences.getInstance();
     final todosJson = prefs.getStringList(_todosKey) ?? [];
-
     final index = _findTodoIndexById(todosJson, id);
     // использую вспомогательную функцию поиска находим наш айди
     if (index != -1) {
@@ -56,7 +54,6 @@ class TodoRepository {
   Future<void> editTodo (Todo updateTodo) async{
     final prefs = await SharedPreferences.getInstance();
     final todosJson = prefs.getStringList(_todosKey) ?? [];
-
     final index = _findTodoIndexById(todosJson, updateTodo.id);
 
     if (index != -1) {

@@ -5,9 +5,6 @@ import 'package:to_do/bloc/todo_state.dart';
 import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/my_color/color.dart';
 import 'package:to_do/screens/add_todo_screen.dart';
-import 'package:to_do/screens/settings_screen.dart';
-import 'package:to_do/screens/statistick_todo_screen.dart';
-import 'package:to_do/screens/tasks_screen.dart';
 import 'package:to_do/widgets/app_bar_widget.dart';
 import 'package:to_do/widgets/new_todo_item.dart';
 
@@ -47,7 +44,7 @@ class _HomescreenState extends State<Homescreen> {
                               if (state is TodoLoading) {
                                 return CircularProgressIndicator();
                               } else if (state is TodoLoaded) {
-                                return state.todos.isEmpty ? Text('Произошла ошибка загрузки') : appBar(state);
+                                return appBar(state);
                               } else if (state is TodoError) {
                                 return Center(
                                   child: Text('ошибка загрузки'),
@@ -85,7 +82,15 @@ class _HomescreenState extends State<Homescreen> {
         ),
         onRefresh: () async{
           return Future<void>.delayed(const Duration(seconds: 3));
-        })
+        }),
+        floatingActionButton: FloatingActionButton(
+          child: Icon( Icons.add , size: 30),
+          onPressed: () {
+            () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => AddTodoScreen()));
+            };
+          }
+          ),
     );
 }
 

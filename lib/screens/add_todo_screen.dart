@@ -33,12 +33,11 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   final _nameController = TextEditingController(); // делаем ключ формы
   final _titleController = TextEditingController(); // делаем переменную которую можем использовать только в этом классе и которая будет сохранять текст
   final _descriptionController = TextEditingController();
+
   DateTime? _dateTime;
   String? header;
   String choosePriority = priority.first;
- 
-  
-  
+
   @override
   void dispose () {
     _nameController.dispose(); // функция очистки контроллеров при удалении виджета
@@ -47,12 +46,9 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
     super.dispose();
   }
 
-  
-
   @override // создаем экран
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    // double height = MediaQuery.of(context).size.height;
     double myFontSize = width * 0.018;
     return Scaffold(
       appBar: AppBar(
@@ -134,21 +130,21 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
              Text('Приоритет : '),
               DropdownButton<String>(
                 isExpanded: true,
-      value: choosePriority,
-      elevation: 16,
-      style: TextStyle(color: changePriorityColor(choosePriority)),
-      underline: Container(height: 0, color: Colors.blue),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          choosePriority = value!;
-        });
-      },
-      items:
-          priority.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(value: value, child: Text(value));
-          }).toList(),
-    ),
+                  value: choosePriority,
+                  elevation: 16,
+                  style: TextStyle(color: changePriorityColor(choosePriority)),
+                  underline: Container(height: 0, color: Colors.blue),
+                  onChanged: (String? value) {
+                    // This is called when the user selects an item.
+                    setState(() {
+                      choosePriority = value!;
+                    });
+                  },
+                  items:
+                      priority.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(value: value, child: Text(value));
+                      }).toList(),
+                ),
               SizedBox(
                 height: 24,
               ),
@@ -207,8 +203,4 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
         print(dateTime);
       } 
 }
-
-  
-
- 
 }

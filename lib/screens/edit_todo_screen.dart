@@ -27,29 +27,30 @@ class EditTodoScreen extends StatefulWidget{
 class _EditTodoScreenState extends State<EditTodoScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
-  // late TextEditingController _titleController;
   late TextEditingController _descriptionController;
+
   String? header;
   String? description;
   String? name;
   DateTime? _editTime;
   String? formatDate;
   String choosePriority = priority.first;
+  
   @override
   void initState() {
-    // _titleController = TextEditingController(text: widget.todo.title);
     _descriptionController = TextEditingController(text: widget.todo.description);
     _nameController = TextEditingController(text: widget.todo.name);
     _editTime = widget.todo.createdAt;
     formatDate = DateFormat('yyyy-MM-dd').format(_editTime!);
   }
+
   @override
   void dispose () {
-    // _titleController.dispose();
     _descriptionController.dispose();
     _nameController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

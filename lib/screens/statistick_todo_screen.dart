@@ -8,7 +8,6 @@ import 'package:to_do/bloc/todo_state.dart';
 import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/my_color/color.dart';
 import 'package:to_do/widgets/app_bar_widget.dart';
-import 'package:to_do/widgets/diagram_two_widget.dart';
 import 'package:to_do/widgets/diagram_widget.dart';
 import 'package:to_do/widgets/statistick_containers_widget.dart';
 
@@ -38,13 +37,11 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double staticaZadach = width * 0.02;
-    double analitika = width * 0.01;
-    double staticDay = width * 0.012;
-    double dayContainer = width * 0.0650;
-    double dayContainerText = width * 0.006;
-    double sizedBox = width * 0.35;
+    final width = MediaQuery.of(context).size.width;
+  final height = MediaQuery.of(context).size.height;
+
+  final double baseSize = width < 400 ? 12 : 14;
+  final double iconSize = width < 400 ? 16 : 20;
     
    return Scaffold(
     backgroundColor: const Color.fromARGB(255, 246, 245, 245),
@@ -56,7 +53,7 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                               if (state is TodoLoading) {
                                 return CircularProgressIndicator();
                               } else if (state is TodoLoaded) {
-                                return state.todos.isEmpty ? Text('') : appBar(state);
+                                return appBar(state);
                               } else if (state is TodoError) {
                                 return Center(
                                   child: Text('ошибка загрузки'),
@@ -81,7 +78,7 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                 ),
                 child: Text('Статистика задач',
                   style: TextStyle(
-                    fontSize: staticaZadach,
+                    fontSize: baseSize + 5,
                     fontWeight: FontWeight.bold
                   ),
                 ),
@@ -93,7 +90,7 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                   ),
                 child: Text('Аналитика показателей эеффективности наших задач',
                   style: TextStyle(
-                    fontSize: analitika,
+                    fontSize: baseSize - 3,
                     fontWeight: FontWeight.w400
                   ),
                 ),
@@ -118,17 +115,17 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                       ),
                       Text('Статистика за неделю',
                         style: TextStyle(
-                          fontSize: staticDay,
+                          fontSize: baseSize - 3,
                           fontWeight: FontWeight.bold
                         ),
                       ),
-                        SizedBox(width: sizedBox),
+                        SizedBox(width: baseSize ),
                           Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Container(
-                                width: dayContainer,
+                                width: baseSize ,
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
@@ -145,7 +142,7 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                                       child: Text('Неделя',
                                       softWrap: false,
                                         style: TextStyle(
-                                          fontSize: dayContainerText,
+                                          fontSize: baseSize,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey[700]
                                         ),
@@ -156,7 +153,7 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                                 width: 5,
                               ),
                             Container(
-                              width: dayContainer,
+                              width: baseSize,
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
@@ -173,7 +170,7 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                                   child: Text('Месяц',
                                   softWrap: false,
                                     style: TextStyle(
-                                      fontSize: dayContainerText,
+                                      fontSize: baseSize - 7,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey[700]
                                     ),
@@ -184,7 +181,7 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                                 width: 5,
                               ),
                             Container(
-                              width: dayContainer,
+                              width: baseSize,
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
@@ -201,7 +198,7 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                                       child: Text('Год',
                                       softWrap: false,
                                         style: TextStyle(
-                                          fontSize: dayContainerText,
+                                          fontSize: baseSize - 5,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey[700]
                                         ),
@@ -249,23 +246,23 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                               }
                             }
                           ),
-                          BlocBuilder<TodoBloc, TodoState>(
-                            builder: (context, state) {
-                              if (state is TodoLoading) {
-                                return CircularProgressIndicator();
-                              } else if (state is TodoLoaded) {
-                                return state.todos.isEmpty ? Text('Произошла ошибка загрузки') : diagramTwo(state);
-                              } else if (state is TodoError) {
-                                return Center(
-                                  child: Text('ошибка загрузки'),
-                                );
-                              } else {
-                                return const Center(
-                                  child: Text('Все пошло по бороде'),
-                                );
-                              }
-                            }
-                          ),
+                          // BlocBuilder<TodoBloc, TodoState>(
+                          //   builder: (context, state) {
+                          //     if (state is TodoLoading) {
+                          //       return CircularProgressIndicator();
+                          //     } else if (state is TodoLoaded) {
+                          //       return state.todos.isEmpty ? Text('Произошла ошибка загрузки') : diagramTwo(state);
+                          //     } else if (state is TodoError) {
+                          //       return Center(
+                          //         child: Text('ошибка загрузки'),
+                          //       );
+                          //     } else {
+                          //       return const Center(
+                          //         child: Text('Все пошло по бороде'),
+                          //       );
+                          //     }
+                          //   }
+                          // ),
             ],
         ),
         ),
@@ -288,8 +285,8 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
       return DiagramWidget();
     }
 
-    Widget diagramTwo (TodoLoaded state) {
-      final todos =  state.todos;
-      return DiagramTwoWidget();
-    }
+    // Widget diagramTwo (TodoLoaded state) {
+    //   final todos =  state.todos;
+    //   return DiagramTwoWidget();
+    // }
 }

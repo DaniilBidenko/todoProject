@@ -154,7 +154,7 @@ class _DiagramWidgetState extends State<DiagramWidget> {
                                         borderSide: BorderSide(
                                           width: 2,
                                           color: Colors.orange.shade800
-                                        )
+                                        ),
                                       ),
                                         PieChartSectionData(
                                           value: todos.where((todos) => todos.isCompleted).length.toDouble(),

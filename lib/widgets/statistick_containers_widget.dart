@@ -15,10 +15,11 @@ class StatistickContainersWidget extends StatefulWidget{
 class  _StatistickContainersWidgetState extends State<StatistickContainersWidget> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double containersSize = width * 0.2;
-    double height = MediaQuery.of(context).size.height;
-    double containerHeight = height * 0.14;
+     final width = MediaQuery.of(context).size.width;
+  final height = MediaQuery.of(context).size.height;
+
+  final double baseSize = width < 400 ? 12 : 14;
+  final double iconSize = width < 400 ? 16 : 20;
                return Padding(
                   padding: EdgeInsets.only(
                     top: 15,
@@ -29,8 +30,8 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(                      
-                            width: containersSize,
-                            height: containerHeight,
+                            width: baseSize,
+                            height: 40,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.all(Radius.circular(5))
@@ -54,8 +55,8 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                                 )
                           ),
                             Container(                      
-                              width: containersSize,
-                              height: containerHeight,
+                              width: baseSize,
+                              height: 40,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.all(Radius.circular(5))
@@ -79,8 +80,8 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                                 )
                             ),
                               Container(                       
-                                width: containersSize,
-                                height: containerHeight,
+                                width: baseSize,
+                                height: 40,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.all(Radius.circular(5))
@@ -90,8 +91,8 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                                ),
                               ),
                                 Container(
-                                  width: containersSize,
-                                  height: containerHeight,
+                                  width: baseSize,
+                                  height: 40,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.all(Radius.circular(5))
@@ -120,13 +121,14 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
   }
 
   Widget getListTodo (TodoLoaded state) {
-          double width = MediaQuery.of(context).size.width;
-          double vsegoZadach = width * 0.010;
-          double containersSize = width * 0.1;
-          double iconSize = width * 0.03;
+          final width = MediaQuery.of(context).size.width;
+  final height = MediaQuery.of(context).size.height;
+
+  final double baseSize = width < 400 ? 12 : 14;
+  final double iconSize = width < 400 ? 16 : 20;
           final todos = state.todos;
             return Container(                      
-                      width: containersSize,
+                      width: baseSize,
                       height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -161,7 +163,7 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                                 ),
                                   child: Text('Всего задач',
                                     style: TextStyle(
-                                      fontSize: vsegoZadach,
+                                      fontSize: baseSize,
                                       fontWeight: FontWeight.w400
                                     ),
                                   ),
@@ -188,12 +190,13 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
 
  Widget getCompletedListTodo (TodoLoaded state) {
   final todos = state.todos;
-  double width = MediaQuery.of(context).size.width;
-  double vsegoZadach = width * 0.010;
-  double containersSize = width * 0.05;
-  double iconSize = width * 0.03;
+   final width = MediaQuery.of(context).size.width;
+  final height = MediaQuery.of(context).size.height;
+
+  final double baseSize = width < 400 ? 12 : 14;
+  final double iconSize = width < 400 ? 16 : 20;
   return Container(                      
-            width: containersSize,
+            width: baseSize,
             height: 50,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -221,13 +224,13 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                       children: [
                         Text('Выполнено задач ',
                   style: TextStyle(
-                    fontSize: vsegoZadach,
+                    fontSize: baseSize,
                     fontWeight: FontWeight.w400
                   ),
                   ),
                   Text(' ${todos.where((todos) => todos.isCompleted).length}',
                   style: TextStyle(
-                  fontSize: vsegoZadach,
+                  fontSize: baseSize,
                   fontWeight: FontWeight.bold
                     ),
                   )
@@ -241,10 +244,11 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
 
  Widget getEffectivTodo (TodoLoaded state) {
       final todos = state.todos;
-      double width = MediaQuery.of(context).size.width;
-      double vsegoZadach = width * 0.010;
-      double containersSize = width * 0.05;
-      double iconSize = width * 0.03;
+      final width = MediaQuery.of(context).size.width;
+      final height = MediaQuery.of(context).size.height;
+
+      final double baseSize = width < 400 ? 12 : 14;
+      final double iconSize = width < 400 ? 16 : 20;
         return Container(
           width: 100,
           height: 50,
@@ -280,13 +284,13 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                       children: [
                         Text('Эффективность :',
                   style: TextStyle(
-                    fontSize: vsegoZadach,
+                    fontSize: baseSize ,
                     fontWeight: FontWeight.w400
                   ),
                   ),
                   Text('${((todos.where((todos) => todos.isCompleted).length / todos.length)* 100).toInt()}%',
                   style: TextStyle(
-                  fontSize: vsegoZadach,
+                  fontSize: baseSize,
                   fontWeight: FontWeight.bold
                     ),
                   ),
@@ -301,8 +305,11 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
 
   Widget getDiagrammStatistick (TodoLoaded state) {
   final todos =  state.todos;
-  double width = MediaQuery.of(context).size.width;
-  double raspredelenie = width * 0.013;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
+    final double baseSize = width < 400 ? 12 : 14;
+    final double iconSize = width < 400 ? 16 : 20;
   return Padding(
             padding: EdgeInsets.only(
               top: 0,
@@ -324,7 +331,7 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                             ),
                             child: Text('Распределение по статусу',
                             style: TextStyle(
-                              fontSize: raspredelenie
+                              fontSize: baseSize
                             ),
                           ),
                             ),
