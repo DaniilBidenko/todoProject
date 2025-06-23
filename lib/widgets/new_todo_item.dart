@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +28,10 @@ class TodoItem extends StatefulWidget {
 }
 
 class _TodoItemState extends State<TodoItem> {
+  
   late TodoColor todoColor;
+  Key _listKey = UniqueKey();
+
   @override
   void initState() {
     super.initState();
@@ -45,151 +47,173 @@ class _TodoItemState extends State<TodoItem> {
   }
 
   @override
-Widget build(BuildContext context) {
-  final width = MediaQuery.of(context).size.width;
-  final height = MediaQuery.of(context).size.height;
-
-  final double baseSize = width < 400 ? 12 : 14;
-  final double iconSize = width < 400 ? 16 : 20;
-
-  return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      border: Border(
-        left: BorderSide(color: Colors.green, width: 4),
+  Widget build(BuildContext context) {
+     double width = MediaQuery.of(context).size.width;
+     double textPriority = width * 0.015;
+     double createdDate = width * 0.012;
+     double editData = width * 0.012;
+     double widthCard = width * 0.18;
+     double title = width * 0.05;
+     double description = width * 0.010;
+     double sizedBox = width * 0.005;
+     double icon = width * 0.02; 
+     double height = MediaQuery.of(context).size.height;
+     double cardHeight = height * 0.10;
+    return Container(
+      margin: EdgeInsets.symmetric( // внешних отступ
+         horizontal: 24,
+        vertical: 8
+         ),
+      width: widthCard,
+      height: cardHeight,
+      decoration: BoxDecoration(
+        color: Colors.red,
+        border: Border(
+          left: BorderSide(
+            color: Colors.green,
+            width: 4
+          )
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(20))
       ),
-      borderRadius: BorderRadius.circular(12),
-      boxShadow: [BoxShadow(blurRadius: 3, color: Colors.black12)],
-    ),
-    child: Padding(
-      padding: const EdgeInsets.all(0),
-      child: Row(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-              left: 0,
-              bottom: 15
-            ),
-            child: Checkbox(
-            shape: const CircleBorder(),
-            value: widget.todo.isCompleted,
-            onChanged: (_) {
-              context.read<TodoBloc>().add(ToggleTodoStatus(widget.todo.id));
-            },
-            fillColor: MaterialStateProperty.all(todoColor.iconTaskColor),
-          ),
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.todo.name,
-                  style: TextStyle(
-                    fontSize: baseSize + 1,
-                    fontWeight: FontWeight.w600,
-                    color: todoColor.titleColor,
-                    decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null,
-                  ),
-                ),
-                if (widget.todo.description.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(widget.todo.description,
+      child: Card(
+      margin: EdgeInsets.symmetric(
+         horizontal: 0,
+        vertical: 0
+         ),
+       child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Checkbox(
+              shape: CircleBorder(),
+              value: widget.todo.isCompleted, // берем данные нашей модели 
+              onChanged: (_) {
+                context.read<TodoBloc>().add(ToggleTodoStatus(widget.todo.id)); //   отправляем событие в блок для изменения статуса задачи
+              },
+              fillColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+                if (states.contains(MaterialState.selected)) {
+                  return todoColor.iconTaskColor; 
+                }
+                  return todoColor.iconTaskColor; 
+                }),
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                     Text(widget.todo.name,
                       style: TextStyle(
-                        fontSize: baseSize,
-                        color: todoColor.descriptionColor,
-                        decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 50
-            ),
-                child: Text(widget.todo.valueDropDown,
-                  style: TextStyle(
-                    fontSize: baseSize,
-                    color: changePriorityColor(widget.todo.valueDropDown),
-                  )),
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                  Padding(
-                  padding: const EdgeInsets.only(top: 4, left: 15),
-                  child: Text(
-                    'Создано: ${DateFormat('yyyy-MM-dd').format(widget.todo.createdAt)}',
-                    style: TextStyle(
-                      fontSize: baseSize - 5,
-                      color: todoColor.createdData,
+                        color: todoColor.titleColor,
+                      fontSize: title,
+                      fontWeight: FontWeight.bold,
                       decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null,
                     ),
-                  ),
-                ),
-                if (widget.todo.editAt)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2, left: 30),
-                    child: Text(
-                      'Изменено: ${DateFormat('yyyy-MM-dd').format(DateTime.now())}',
-                      style: TextStyle(
-                        fontSize: baseSize - 5,
-                        color: todoColor.createdData,
-                        decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null
-                      ),
                     ),
-                  ),
+                    if (widget.todo.description.isNotEmpty) 
+                      Padding(
+                        padding: EdgeInsets.only(top: 4),
+                        child: Text(widget.todo.description,
+                        style: TextStyle(
+                          fontSize: description,
+                          color: todoColor.descriptionColor,
+                          decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null // если задача выполнена зачеркни описание линией иначе ничего
+                        ),
+                        ),
+                        ),
                 ],
-              )
-            ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(padding: EdgeInsets.only(
-                    left: 0
-                  ),
-                    child:  IconButton(
-                      padding: EdgeInsets.all(2),
-                    icon: Icon(Icons.delete_forever_outlined, color: todoColor.iconDeleteColor, size: 20),
-                    onPressed: () => context.read<TodoBloc>().add(DeleteTodo(widget.todo.id)),
-                    constraints: BoxConstraints(),
-                  ),
-                  ),
-                  Padding(padding: EdgeInsets.only(
-                    left: 0
-                  ),
-                    child: IconButton(
-                    padding: EdgeInsets.all(2),
-                    icon: Icon(Icons.edit_document, color: todoColor.iconTaskColor, size: 20),
-                    constraints: BoxConstraints(
-                    ),
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => EditTodoScreen(todo: widget.todo),
-                      ));
-                    },
-                  ),
-                  )
-                  ]
+              ),
+              ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                            widget.todo.valueDropDown,
+                            style: TextStyle(
+                              fontSize: textPriority,
+                              color: changePriorityColor(widget.todo.valueDropDown),
+                              // decoration: todo.valueDropDown ? TextDecoration.lineThrough : null
+                              ),
+                          ),
+                                ]
+                              )
+                              ),
+                            SizedBox(
+                              width: sizedBox
+                            ),
+                            Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Padding(
+                        padding: EdgeInsets.only(top: 4),
+                        child: Text(' ${DateFormat('yyyy-MM-dd').format(widget.todo.createdAt)}', // обращаем к классу и выбираем поле дата создания с типом данных DateTime
+                        style: TextStyle(
+                          fontSize: createdDate,
+                          color: todoColor.createdData,
+                          decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null
+                        ),
+                        ),
+                        ),
+                        Padding(
+                        padding: EdgeInsets.only(top: 4),
+                        child: widget.todo.editAt ? 
+                        Text(' ${DateFormat('yyyy-MM-dd').format(DateTime.now())}' ,// обращаем к классу и выбираем поле дата создания с типом данных DateTime
+                        style: TextStyle(
+                          fontSize: editData,
+                          color: todoColor.createdData,
+                          decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null
+                        ),
+                        ) : null
+                        ),
+                        ],
+                      )
+                      ),
+                      SizedBox(
+                        width: sizedBox,
+                      ),
+                            IconButton(
+                        padding: EdgeInsets.all(2),
+                        constraints: BoxConstraints(),
+                        onPressed: () {
+                          context.read<TodoBloc>().add(DeleteTodo(widget.todo.id)); // отправляем событие в блок для уделания задачи
+                        }, 
+                        icon: Icon(Icons.delete_forever_outlined, size: icon, color: todoColor.iconDeleteColor,), // значок удаления
+                        ),
+                        IconButton(
+                          padding: EdgeInsets.all(2),
+                          constraints: BoxConstraints(),
+                          onPressed: 
+                           () {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => EditTodoScreen(todo: widget.todo)
+                              ));
+                          }, 
+                          icon: Icon(Icons.edit_document, size: icon, color: todoColor.iconTaskColor,))
+                          ],
+                        )
+                        ),                                             
+                  ],
                 )
                 )
-                  
-                  
-        ],
-      ),
+          ],
+        ),
+        ),
     ),
-  );
-}
+    );
   }
-
-  
-
-
-
-
+}

@@ -125,7 +125,8 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                               mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Container(
-                                width: baseSize ,
+                                width: baseSize + 30 ,
+                                height: 40,
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
@@ -140,9 +141,8 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                                   ),
                                     onPressed: () {}, 
                                       child: Text('Неделя',
-                                      softWrap: false,
                                         style: TextStyle(
-                                          fontSize: baseSize,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey[700]
                                         ),
@@ -153,7 +153,8 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                                 width: 5,
                               ),
                             Container(
-                              width: baseSize,
+                              width: baseSize + 30,
+                              height: 40,
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
@@ -168,9 +169,8 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                                   ),
                                 onPressed: () {}, 
                                   child: Text('Месяц',
-                                  softWrap: false,
                                     style: TextStyle(
-                                      fontSize: baseSize - 7,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey[700]
                                     ),
@@ -181,7 +181,8 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                                 width: 5,
                               ),
                             Container(
-                              width: baseSize,
+                              width: baseSize + 30,
+                              height: 40,
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
@@ -196,9 +197,8 @@ class _StatistickTodoScreenState extends State<StatistickTodoScreen> {
                                   ),
                                     onPressed: () {}, 
                                       child: Text('Год',
-                                      softWrap: false,
                                         style: TextStyle(
-                                          fontSize: baseSize - 5,
+                                          fontSize: 20 ,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.grey[700]
                                         ),

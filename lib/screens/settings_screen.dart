@@ -3,6 +3,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/my_color/color.dart';
+import 'package:to_do/screens/homescreen.dart';
 
 class SettingsScreen extends StatefulWidget{
   final Todo? todo;
@@ -21,6 +22,7 @@ class _SettingsScreenState extends State<SettingsScreen>{
   Color buttonSettingsTextColor = Colors.grey;
   Color buttonAddedTextColor = Colors.white;
   late TodoColor todoColor;
+   Key _listKey = UniqueKey();
 
   Future<void> _loadTodoColors() async{
     final colors = await TodoColor.loadFromPrefs();

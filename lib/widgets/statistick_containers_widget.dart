@@ -15,11 +15,10 @@ class StatistickContainersWidget extends StatefulWidget{
 class  _StatistickContainersWidgetState extends State<StatistickContainersWidget> {
   @override
   Widget build(BuildContext context) {
-     final width = MediaQuery.of(context).size.width;
-  final height = MediaQuery.of(context).size.height;
-
-  final double baseSize = width < 400 ? 12 : 14;
-  final double iconSize = width < 400 ? 16 : 20;
+    double width = MediaQuery.of(context).size.width;
+    double containersSize = width * 0.175;
+    double height = MediaQuery.of(context).size.height;
+    double containerHeight = height * 0.10;
                return Padding(
                   padding: EdgeInsets.only(
                     top: 15,
@@ -29,19 +28,12 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(                      
-                            width: baseSize,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(5))
-                            ),
-                            child: BlocBuilder<TodoBloc, TodoState>(
+                          BlocBuilder<TodoBloc, TodoState>(
                                   builder: (context, state) {
                                     if (state is TodoLoading) {
                                       return CircularProgressIndicator();
                                     } else if (state is TodoLoaded) {
-                                      return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : getListTodo(state);
+                                      return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : statistickContainers(state, 'Всего задач', '${state.todos.length}', Icons.event);
                                     } else if (state is TodoError) {
                                       return Center(
                                         child: Text('ошибка загрузки'),
@@ -53,82 +45,19 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                                     }
                                   }
                                 )
-                          ),
-                            Container(                      
-                              width: baseSize,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(Radius.circular(5))
-                              ),
-                                child: BlocBuilder<TodoBloc, TodoState>(
-                                  builder: (context, state) {
-                                    if (state is TodoLoading) {
-                                      return CircularProgressIndicator();
-                                    } else if (state is TodoLoaded) {
-                                      return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : getCompletedListTodo(state);
-                                    } else if (state is TodoError) {
-                                      return Center(
-                                        child: Text('ошибка загрузки'),
-                                      );
-                                    } else {
-                                      return const Center(
-                                        child: Text('Все пошло по бороде'),
-                                      );
-                                    }
-                                  }
-                                )
-                            ),
-                              Container(                       
-                                width: baseSize,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(Radius.circular(5))
-                                ),
-                               child: Row(
-
-                               ),
-                              ),
-                                Container(
-                                  width: baseSize,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(Radius.circular(5))
-                                  ),
-                                     child: BlocBuilder<TodoBloc, TodoState>(
-                                  builder: (context, state) {
-                                    if (state is TodoLoading) {
-                                      return CircularProgressIndicator();
-                                    } else if (state is TodoLoaded) {
-                                      return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : getEffectivTodo(state);
-                                    } else if (state is TodoError) {
-                                      return Center(
-                                        child: Text('ошибка загрузки'),
-                                      );
-                                    } else {
-                                      return const Center(
-                                        child: Text('Все пошло по бороде'),
-                                      );
-                                    }
-                                  }
-                                )
-                                ),
                         ],
                     ),
                 );
   }
 
   Widget getListTodo (TodoLoaded state) {
-          final width = MediaQuery.of(context).size.width;
-  final height = MediaQuery.of(context).size.height;
-
-  final double baseSize = width < 400 ? 12 : 14;
-  final double iconSize = width < 400 ? 16 : 20;
+          double width = MediaQuery.of(context).size.width;
+          double vsegoZadach = width * 0.0125;
+          double containersSize = width * 0.1;
+          double iconSize = width * 0.03;
           final todos = state.todos;
             return Container(                      
-                      width: baseSize,
+                      width: containersSize,
                       height: 50,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -163,8 +92,8 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                                 ),
                                   child: Text('Всего задач',
                                     style: TextStyle(
-                                      fontSize: baseSize,
-                                      fontWeight: FontWeight.w400
+                                      fontSize: vsegoZadach,
+                                      fontWeight: FontWeight.w900
                                     ),
                                   ),
                               ),
@@ -190,13 +119,12 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
 
  Widget getCompletedListTodo (TodoLoaded state) {
   final todos = state.todos;
-   final width = MediaQuery.of(context).size.width;
-  final height = MediaQuery.of(context).size.height;
-
-  final double baseSize = width < 400 ? 12 : 14;
-  final double iconSize = width < 400 ? 16 : 20;
+  double width = MediaQuery.of(context).size.width;
+  double vsegoZadach = width * 0.010;
+  double containersSize = width * 0.05;
+  double iconSize = width * 0.03;
   return Container(                      
-            width: baseSize,
+            width: containersSize,
             height: 50,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -224,13 +152,13 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                       children: [
                         Text('Выполнено задач ',
                   style: TextStyle(
-                    fontSize: baseSize,
+                    fontSize: vsegoZadach,
                     fontWeight: FontWeight.w400
                   ),
                   ),
                   Text(' ${todos.where((todos) => todos.isCompleted).length}',
                   style: TextStyle(
-                  fontSize: baseSize,
+                  fontSize: vsegoZadach,
                   fontWeight: FontWeight.bold
                     ),
                   )
@@ -244,11 +172,10 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
 
  Widget getEffectivTodo (TodoLoaded state) {
       final todos = state.todos;
-      final width = MediaQuery.of(context).size.width;
-      final height = MediaQuery.of(context).size.height;
-
-      final double baseSize = width < 400 ? 12 : 14;
-      final double iconSize = width < 400 ? 16 : 20;
+      double width = MediaQuery.of(context).size.width;
+      double vsegoZadach = width * 0.010;
+      double containersSize = width * 0.05;
+      double iconSize = width * 0.03;
         return Container(
           width: 100,
           height: 50,
@@ -284,13 +211,13 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                       children: [
                         Text('Эффективность :',
                   style: TextStyle(
-                    fontSize: baseSize ,
+                    fontSize: vsegoZadach,
                     fontWeight: FontWeight.w400
                   ),
                   ),
                   Text('${((todos.where((todos) => todos.isCompleted).length / todos.length)* 100).toInt()}%',
                   style: TextStyle(
-                  fontSize: baseSize,
+                  fontSize: vsegoZadach,
                   fontWeight: FontWeight.bold
                     ),
                   ),
@@ -305,11 +232,8 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
 
   Widget getDiagrammStatistick (TodoLoaded state) {
   final todos =  state.todos;
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-
-    final double baseSize = width < 400 ? 12 : 14;
-    final double iconSize = width < 400 ? 16 : 20;
+  double width = MediaQuery.of(context).size.width;
+  double raspredelenie = width * 0.013;
   return Padding(
             padding: EdgeInsets.only(
               top: 0,
@@ -331,7 +255,7 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                             ),
                             child: Text('Распределение по статусу',
                             style: TextStyle(
-                              fontSize: baseSize
+                              fontSize: raspredelenie
                             ),
                           ),
                             ),
@@ -430,5 +354,72 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                   ),
               ),
           );
+    }
+
+    Widget statistickContainers (TodoLoaded state, String name, String value, IconData icon) {
+        double width = MediaQuery.of(context).size.width;
+          double vsegoZadach = width * 0.0125;
+          double containersSize = width * 0.1;
+          double iconSize = width * 0.03;
+          final todos = state.todos;
+                   return  Container(                      
+                      width: containersSize,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(5))
+                      ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: 0,
+                                left: 10
+                              ),
+                                child: Icon(
+                                  Icons.event,
+                                  size: iconSize,
+                                  color: Colors.blue,
+                                ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                              top: 24,
+                              left: 10
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: 0,
+                                  left: 0,
+                                  bottom: 0,
+                                ),
+                                  child: Text('Всего задач',
+                                    style: TextStyle(
+                                      fontSize: vsegoZadach,
+                                      fontWeight: FontWeight.w900
+                                    ),
+                                  ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: 0,
+                                  left: 0
+                                ),
+                                  child: Text('${todos.length}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18
+                                    ),
+                                  ),
+                            ),
+                                ],
+                              ),
+                            ), 
+                          ],
+                        ),
+                    );            
     }
 }

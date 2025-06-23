@@ -84,11 +84,11 @@ class _HomescreenState extends State<Homescreen> {
           return Future<void>.delayed(const Duration(seconds: 3));
         }),
         floatingActionButton: FloatingActionButton(
-          child: Icon( Icons.add , size: 30),
+          child: Icon(Icons.add),
           onPressed: () {
-            () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => AddTodoScreen()));
-            };
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => AddTodoScreen()
+              ));
           }
           ),
     );
