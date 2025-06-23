@@ -53,12 +53,12 @@ class _TodoItemState extends State<TodoItem> {
      double createdDate = width * 0.012;
      double editData = width * 0.012;
      double widthCard = width * 0.18;
-     double title = width * 0.05;
+     double title = width * 0.015;
      double description = width * 0.010;
      double sizedBox = width * 0.005;
      double icon = width * 0.02; 
      double height = MediaQuery.of(context).size.height;
-     double cardHeight = height * 0.10;
+     double cardHeight = height * 0.13;
     return Container(
       margin: EdgeInsets.symmetric( // внешних отступ
          horizontal: 24,
@@ -77,22 +77,17 @@ class _TodoItemState extends State<TodoItem> {
         borderRadius: BorderRadius.all(Radius.circular(20))
       ),
       child: Card(
-      margin: EdgeInsets.symmetric(
+         // создаем нашу карточку задачи
+      margin: EdgeInsets.symmetric( // внешних отступ
          horizontal: 0,
         vertical: 0
          ),
        child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(16), // отступ со всех сторон
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Checkbox(
+            Checkbox(
               shape: CircleBorder(),
               value: widget.todo.isCompleted, // берем данные нашей модели 
               onChanged: (_) {
@@ -105,15 +100,26 @@ class _TodoItemState extends State<TodoItem> {
                   return todoColor.iconTaskColor; 
                 }),
               ),
+              SizedBox(
+                width:sizedBox,
+              ),
               Expanded(
-                child: Column(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                     Text(widget.todo.name,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(widget.todo.name,
                       style: TextStyle(
                         color: todoColor.titleColor,
                       fontSize: title,
                       fontWeight: FontWeight.bold,
                       decoration: widget.todo.isCompleted ? TextDecoration.lineThrough : null,
+                       // если задача выполнена то зачернки линией текст иначе ничего
                     ),
                     ),
                     if (widget.todo.description.isNotEmpty) 
@@ -127,9 +133,9 @@ class _TodoItemState extends State<TodoItem> {
                         ),
                         ),
                         ),
-                ],
-              ),
-              ),
+                        ]
+                      )
+                      ),
                       Expanded(
                         child: Row(
                           children: [
