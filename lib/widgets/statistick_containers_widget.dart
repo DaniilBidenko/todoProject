@@ -40,7 +40,7 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                                     if (state is TodoLoading) {
                                       return CircularProgressIndicator();
                                     } else if (state is TodoLoaded) {
-                                      return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : statistickContainers(state, 'Всего задач', '${state.todos.length}', Icons.event);
+                                      return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : statistickContainers(state, 'Всего задач', '${state.todos.length}', Icons.event, Colors.blueAccent);
                                     } else if (state is TodoError) {
                                       return Center(
                                         child: Text('ошибка загрузки'),
@@ -65,7 +65,7 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                                     if (state is TodoLoading) {
                                       return CircularProgressIndicator();
                                     } else if (state is TodoLoaded) {
-                                      return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : statistickContainers(state, 'Выполнено :', '${state.todos.where((todos) => todos.isCompleted).length}', Icons.task_alt);
+                                      return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : statistickContainers(state, 'Выполнено', '${state.todos.where((todos) => todos.isCompleted).length}', Icons.task_alt, Colors.greenAccent);
                                     } else if (state is TodoError) {
                                       return Center(
                                         child: Text('ошибка загрузки'),
@@ -101,7 +101,7 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                                     if (state is TodoLoading) {
                                       return CircularProgressIndicator();
                                     } else if (state is TodoLoaded) {
-                                      return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : statistickContainers(state, 'Эффективность', '${((state.todos.where((todos) => todos.isCompleted).length / state.todos.length)* 100).toInt()}%', Icons.show_chart);
+                                      return state.todos.isEmpty ? Text('У вас недостаточно информации для выведения статистики') : statistickContainers(state, 'Эффективность', '${((state.todos.where((todos) => todos.isCompleted).length / state.todos.length)* 100).toInt()}%', Icons.show_chart, Colors.orangeAccent);
                                     } else if (state is TodoError) {
                                       return Center(
                                         child: Text('ошибка загрузки'),
@@ -118,11 +118,11 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                     ),
                 );
   }
- Widget statistickContainers (TodoLoaded state, String name, String value, IconData icon) {
+ Widget statistickContainers (TodoLoaded state, String name, String value, IconData icon, Color iconColor) {
         double width = MediaQuery.of(context).size.width;
-          double vsegoZadach = width * 0.0125;
+          double vsegoZadach = width * 0.01;
           double containersSize = width * 0.1;
-          double iconSize = width * 0.03;
+          double iconSize = width * 0.04;
           final todos = state.todos;
                    return  Container(                      
                       width: containersSize,
@@ -132,22 +132,25 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                         borderRadius: BorderRadius.all(Radius.circular(5))
                       ),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
                                 top: 0,
-                                left: 10
+                                left: 10,
+                                bottom: 5
                               ),
                                 child: Icon(
                                   icon,
                                   size: iconSize,
-                                  color: Colors.blue,
+                                  color: iconColor,
                                 ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(
-                              top: 24,
-                              left: 10
+                              top: 15,
+                              left: 10,
+
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,7 +164,8 @@ class  _StatistickContainersWidgetState extends State<StatistickContainersWidget
                                   child: Text(name,
                                     style: TextStyle(
                                       fontSize: vsegoZadach,
-                                      fontWeight: FontWeight.w900
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.grey
                                     ),
                                   ),
                               ),
