@@ -35,9 +35,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double appBarTitle = width * 0.03;
+    double appBarTitle = width * 0.04;
     return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text('Задачник',
                   style: TextStyle(
@@ -46,7 +46,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                     color:  appBarColors.titleAppBarColor
                     ),
                 ),
-                   appbarButtons ('Настройки', width * 0.15, () {
+                   appbarButtons ('Настройки', width * 0.25, () {
                     Navigator.push(context, MaterialPageRoute(
                         builder: (context) => SettingsScreen()
                         )).then((_) {
@@ -57,7 +57,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           });
                         });
                    }),
-                   appbarButtons('Статистика', width * 0.15, () {
+                   appbarButtons('Статистика', width * 0.25, () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => StatistickTodoScreen()));
                    })
               ]
@@ -66,7 +66,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
 
   Widget appbarButtons (String label, double appBarButtonSize, VoidCallback onTap) {
     double width = MediaQuery.of(context).size.width;
-    double appBatText = width * 0.015;
+    double appBatText = width * 0.025;
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
