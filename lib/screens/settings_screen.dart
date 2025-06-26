@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:to_do/bloc/color_bloc.dart';
+import 'package:to_do/bloc/color_event.dart';
+import 'package:to_do/bloc/color_state.dart';
 import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/my_color/color.dart';
 import 'package:to_do/screens/homescreen.dart';
@@ -70,59 +74,88 @@ class _SettingsScreenState extends State<SettingsScreen>{
         )),
       
     ),
-    body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            Text(
-              'Настройка цветов элементов задачи',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            _buildColorOption('Цвет заголовка задачи', titleColor, (color) {
-              setState(() => titleColor = color);
-            }),
-            _buildColorOption('Цвет описания задачи', descriptionColor, (color) {
-              setState(() => descriptionColor = color);
-            }),
-            _buildColorOption('Цвет даты создания', createdDataColor, (color) {
-              setState(() => createdDataColor = color);
-            }),
-            _buildColorOption('Цвет иконки задачи', iconTaskColor, (color) {
-              setState(() => iconTaskColor = color);
-            }),
-            _buildColorOption('Цвет иконки удаления', iconDeleteColor, (color) {
-              setState(() => iconDeleteColor = color);
-            }),
-            SizedBox(height: 20),
-            Text(
-              'Настройка цветов верхней панели',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            _buildColorOption('Цвет заголовка AppBar', titleAppBarColor, (color) {
-              setState(() => titleAppBarColor = color);
-            }),
-            _buildColorOption('Цвет кнопки настроек', buttonSettingsTextColor, (color) {
-              setState(() => buttonSettingsTextColor = color);
-            }),
-            _buildColorOption('Цвет кнопки добавления', buttonAddedTextColor, (color) {
-              setState(() => buttonAddedTextColor = color);
-            }),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: (){
-                _saveColors();
-                _loadTodoColors();
-              },
-              child: Text('Сохранить настройки'),
-            )
-          ],
-        ),
-      ),
+      body: BlocBuilder<ColorBloc, ColorState>(
+        builder: (context, state) {
+          if(state is ColorLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is ColorLoaded) {
+            return _buildSettingsContent(context, state);
+          } else if (state is ColorError) {
+            return Center(
+              child: Text('${state.massage}'),
+            );
+          } else {
+            return Center(
+              child: Text('Неизвестное состояние'),
+            ); 
+          }
+        })
     );
     
   }
+
+   Widget _buildSettingsContent (BuildContext context, ColorLoaded state) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: ListView(
+        children: [
+          Text('Настройка цветов задачи'),
+          SizedBox(height: 20),
+          _buildColorOption('Цвет заголовки задачи',
+           state.todoColor.titleColor,
+           (color) => context.read<ColorBloc>().add(ColorUpdateTitle(color))
+          ), 
+          SizedBox(height: 20),
+          _buildColorOption('Цвет описания задачи',
+           state.todoColor.descriptionColor,
+           (color) => context.read<ColorBloc>().add(ColorUpdateDescription(color))
+           ),
+           SizedBox(height: 20),
+           _buildColorOption('Цвет даты создания',
+          state.todoColor.createdData,
+          (color) => context.read<ColorBloc>().add(ColorUpdateCreatedData(color))
+          ),
+          SizedBox(height: 20),
+          _buildColorOption('Цвет иконки редактирования задачи',
+          state.todoColor.iconTaskColor, 
+          (color) => context.read<ColorBloc>().add(ColorUpdateIconTask(color))
+          ),
+          SizedBox(height: 20),
+          _buildColorOption('Цвет иконка удаления задачи',
+          state.todoColor.iconDeleteColor,
+          (color) => context.read<ColorBloc>().add(ColorUpdateIconDelete(color))
+          ),
+          SizedBox(height: 20),
+          _buildColorOption('Цвет заголовка шапки',
+          state.appBarColors.titleAppBarColor,
+          (color) => context.read<ColorBloc>().add(ColorUpdateAppBarTitle(color))
+          ),
+          SizedBox(height: 20),
+          _buildColorOption('Цвет текста кнопки добавления задачи',
+          state.appBarColors.buttonAddedTextColor,
+          (color) => context.read<ColorBloc>().add(ColorUpdateButtonAdded(color))
+          ),
+          SizedBox(height: 20),
+          _buildColorOption('Цвет текста кнопки настроек',
+          state.appBarColors.buttonSettingsTextColor,
+          (color) => context.read<ColorBloc>().add(ColorUpdateButtonSettings(color))
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              context.read<ColorBloc>().add(SaveColors());
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Настройки сохранены успешно')));
+            }, 
+          child: Text('Сохранить настройки')
+          
+          ),
+          
+        ],
+      ),
+    );
+   }
 
    Widget _buildColorOption(String title, Color currentColor, Function(Color) onColorChanged) {
     return Padding(
@@ -222,4 +255,5 @@ class _SettingsScreenState extends State<SettingsScreen>{
       SnackBar(content: Text('Настройки успешно сохранены')),
     );
   }
+  
 }

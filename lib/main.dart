@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do/bloc/color_bloc.dart';
+import 'package:to_do/bloc/color_event.dart';
 import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_event.dart';
 import 'package:to_do/data/model/todo.dart';
@@ -22,17 +24,29 @@ final Todo todo;
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (context) => TodoRepository(),
-      child: BlocProvider(
+
+      child: MultiBlocProvider(
+        providers: [
+        BlocProvider(
         create: (context) {
         final repository = RepositoryProvider.of<TodoRepository>(context);
         final bloc = TodoBloc(repository: repository);
         bloc.add(LoadTodo());
         return bloc;
       },
-      child: MaterialApp(
+        ),
+        BlocProvider(
+          create: (context) {
+          final bloc = ColorBloc();
+          bloc.add(ColorLoad());
+          return bloc;
+          }
+          )
+        ], 
+        child: MaterialApp(
         home: Homescreen(todo: todo)
       ),
-        ),
+        ) 
       );
   }
   

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:to_do/bloc/color_bloc.dart';
+import 'package:to_do/bloc/color_state.dart';
 import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_event.dart';
 import 'package:to_do/data/model/todo.dart';
@@ -22,29 +24,12 @@ import 'package:to_do/screens/edit_todo_screen.dart';
 
 class TodoItem extends StatefulWidget {
   final Todo todo;
-  const TodoItem({required this.todo, Key? key}) : super(key: key);
+  const TodoItem({required this.todo,Key? key}) : super(key: key);
   @override
   State<TodoItem> createState() => _TodoItemState();
 }
 
 class _TodoItemState extends State<TodoItem> {
-  
-  late TodoColor todoColor;
-  Key _listKey = UniqueKey();
-
-  @override
-  void initState() {
-    super.initState();
-    todoColor = TodoColor();
-    _loadColors();
-  }
-
-  Future<void> _loadColors() async{
-    final colors = await TodoColor.loadFromPrefs();
-    setState(() {
-      todoColor = colors;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +44,10 @@ class _TodoItemState extends State<TodoItem> {
      double icon = width * 0.02; 
      double height = MediaQuery.of(context).size.height;
      double cardHeight = height * 0.13;
-    return Container(
+    return BlocBuilder<ColorBloc, ColorState>(
+      builder: (context, state) {
+        TodoColor todoColor = state is ColorLoaded ? state.todoColor: TodoColor();
+        return  Container(
       margin: EdgeInsets.symmetric( // внешних отступ
          horizontal: 24,
         vertical: 8
@@ -221,5 +209,7 @@ class _TodoItemState extends State<TodoItem> {
         ),
     ),
     );
+      }
+      );
   }
 }

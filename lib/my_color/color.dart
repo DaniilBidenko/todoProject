@@ -23,6 +23,18 @@ class AppBarColors {
       buttonAddedTextColor: Color(prefs.getInt(buttonAddedTextColorKey) ?? Colors.white.value),
     );
 }
+
+  AppBarColors copyWith ({
+    Color? titleAppBarColor,
+    Color? buttonSettingsTextColor,
+    Color? buttonAddedTextColor
+  }) {
+    return AppBarColors(
+      titleAppBarColor: titleAppBarColor ?? this.titleAppBarColor,
+      buttonSettingsTextColor: buttonSettingsTextColor ?? this.buttonSettingsTextColor,
+      buttonAddedTextColor: buttonAddedTextColor ?? this.buttonAddedTextColor
+    );
+  }
 }
 
 
@@ -55,6 +67,22 @@ static Future<TodoColor> loadFromPrefs() async {
       createdData: Color(prefs.getInt(createdDataColorKey) ?? Colors.grey.value),
       iconTaskColor: Color(prefs.getInt(iconTaskColorKey) ?? Colors.grey.value),
       iconDeleteColor: Color(prefs.getInt(iconDeleteColorKey) ?? Colors.grey.value),
+    );
+  }
+
+  TodoColor copyWith ({
+   Color? titleColor,
+   Color? descriptionColor,
+   Color? createdData,
+   Color? iconTaskColor,
+   Color? iconDeleteColor
+  }) {
+    return TodoColor(
+    titleColor: titleColor ?? this.titleColor,
+    descriptionColor: descriptionColor ?? this.descriptionColor,
+    createdData: createdData ?? this.createdData,
+    iconTaskColor: iconTaskColor ?? this.iconTaskColor,
+    iconDeleteColor: iconDeleteColor ?? this.iconDeleteColor
     );
   }
 

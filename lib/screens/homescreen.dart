@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do/bloc/color_state.dart';
 import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_state.dart';
 import 'package:to_do/data/model/todo.dart';
@@ -15,50 +16,12 @@ class Homescreen extends StatefulWidget{
   _HomescreenState createState() => _HomescreenState();
 }
 class _HomescreenState extends State<Homescreen> {
-  Key _listKey = UniqueKey();
-  late AppBarColors appBarColors;
-
-  @override
-  void initState() {
-    super.initState();
-    appBarColors = AppBarColors();
-    _loadColors();
-  }
-
-  Future<void> _loadColors() async{
-    final colors = await AppBarColors.loadFromPrefs();
-    setState(() {
-      appBarColors = colors;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Title(
-          color: Colors.white,
-          child: BlocBuilder<TodoBloc, TodoState>(
-                            builder: (context, state) {
-                              if (state is TodoLoading) {
-                                return CircularProgressIndicator();
-                              } else if (state is TodoLoaded) {
-                                return appBar(state);
-                              } else if (state is TodoError) {
-                                return Center(
-                                  child: Text('ошибка загрузки'),
-                                );
-                              } else {
-                                return const Center(
-                                  child: Text('Все пошло по бороде'),
-                                );
-                              }
-                            }
-                          )
-        ),
-      ),
-      
+      appBar: AppBarWidget(),
       body: RefreshIndicator(
         // physics: const AlwaysScrollableScrollPhysics()
         child: BlocBuilder<TodoBloc, TodoState>( // создаем BlocBuilder c расширениями TodoBloc и TodoState
@@ -100,10 +63,10 @@ class _HomescreenState extends State<Homescreen> {
     );
   }
  
-  Widget _buildTodoList (TodoLoaded state) { // создаем виджет с параметром Todoloaded state
+  Widget _buildTodoList (TodoLoaded state) {
+     // создаем виджет с параметром Todoloaded state
     final todos = state.todos; // создаем переменную в которой будет список задач
-    return ListView.builder(
-      key: _listKey, // создаем прокручиваемый массив
+    return ListView.builder( // создаем прокручиваемый массив
       itemCount: todos.length, // с числом строк равным длиннной нашего списка задач
       itemBuilder: (context , index) { // itemBuilder с параметрами context и index
         return TodoItem(
@@ -114,10 +77,4 @@ class _HomescreenState extends State<Homescreen> {
       }
       );
   }
-
-  Widget appBar (TodoLoaded state) {
-      final todos = state.todos;
-      return AppBarWidget(
-      );
-    }
 }
