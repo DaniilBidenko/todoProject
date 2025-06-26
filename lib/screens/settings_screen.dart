@@ -7,7 +7,6 @@ import 'package:to_do/bloc/color_event.dart';
 import 'package:to_do/bloc/color_state.dart';
 import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/my_color/color.dart';
-import 'package:to_do/screens/homescreen.dart';
 
 class SettingsScreen extends StatefulWidget{
   final Todo? todo;

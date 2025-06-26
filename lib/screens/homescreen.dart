@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:to_do/bloc/color_state.dart';
 import 'package:to_do/bloc/todo_bloc.dart';
 import 'package:to_do/bloc/todo_state.dart';
 import 'package:to_do/data/model/todo.dart';
-import 'package:to_do/my_color/color.dart';
 import 'package:to_do/screens/add_todo_screen.dart';
 import 'package:to_do/widgets/app_bar_widget.dart';
 import 'package:to_do/widgets/new_todo_item.dart';

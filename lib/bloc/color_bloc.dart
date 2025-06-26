@@ -7,7 +7,15 @@ import 'package:to_do/my_color/color.dart';
 
 class ColorBloc extends Bloc<ColorEvent, ColorState>{
   ColorBloc() : super(ColorLoading()) {
-
+    on<ColorLoad>(_onColorLoad);
+    on<ColorUpdateTitle>(_onColorUpdateTitle);
+    on<ColorUpdateDescription>(_onColorUpdateDescription);
+    on<ColorUpdateCreatedData>(_onUpdateCreatedData);
+    on<ColorUpdateIconTask>(_onUpdateIconTask);
+    on<ColorUpdateIconDelete>(_onUpdateIconDelete);
+    on<ColorUpdateAppBarTitle>(_onUpdateAppBarTitle);
+    on<ColorUpdateButtonAdded>(_onUpdateButtonAdded);
+    on<ColorUpdateButtonSettings>(_onUpdateButtonSettings);
   }
 
   Future<void> _onColorLoad (ColorLoad event, Emitter<ColorState> emit) async{
@@ -24,7 +32,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState>{
   Future<void> _onColorUpdateTitle (ColorUpdateTitle event, Emitter<ColorState> emit) async{
     if (state is ColorLoaded) {
       final currentState = state as ColorLoaded;
-      final updatedTodoColor = TodoColor(
+      final updatedTodoColor = currentState.todoColor.copyWith(
         titleColor: event.color
       );
       emit(ColorLoaded(updatedTodoColor, currentState.appBarColors));
@@ -34,7 +42,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState>{
   Future<void> _onColorUpdateDescription (ColorUpdateDescription event, Emitter<ColorState> emit) async{
     if(state is ColorLoaded) {
       final currentState = state as ColorLoaded;
-      final updatedTodoColor = TodoColor(
+      final updatedTodoColor = currentState.todoColor.copyWith(
         descriptionColor: event.color
         );
         emit(ColorLoaded(updatedTodoColor, currentState.appBarColors));
@@ -44,7 +52,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState>{
   Future<void> _onUpdateCreatedData (ColorUpdateCreatedData event, Emitter<ColorState> emit) async{
     if(state is ColorLoaded) {
       final currentState =  state as ColorLoaded;
-      final updateColor = TodoColor(
+      final updateColor = currentState.todoColor.copyWith(
         createdData: event.color
       );
       emit(ColorLoaded(updateColor, currentState.appBarColors));
@@ -53,7 +61,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState>{
   Future<void> _onUpdateIconTask (ColorUpdateIconTask event, Emitter<ColorState> emit) async{
     if(state is ColorLoaded) {
       final currentState =  state as ColorLoaded;
-      final updateColor = TodoColor(
+      final updateColor = currentState.todoColor.copyWith(
         iconTaskColor: event.color
       );
       emit(ColorLoaded(updateColor, currentState.appBarColors));
@@ -62,7 +70,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState>{
   Future<void> _onUpdateIconDelete (ColorUpdateIconDelete event, Emitter<ColorState> emit) async{
     if(state is ColorLoaded) {
       final currentState =  state as ColorLoaded;
-      final updateColor = TodoColor(
+      final updateColor = currentState.todoColor.copyWith(
         iconDeleteColor: event.color
       );
       emit(ColorLoaded(updateColor, currentState.appBarColors));
@@ -71,7 +79,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState>{
   Future<void> _onUpdateAppBarTitle (ColorUpdateAppBarTitle event, Emitter<ColorState> emit) async{
     if(state is ColorLoaded) {
       final currentState =  state as ColorLoaded;
-      final updateColor = AppBarColors(
+      final updateColor = currentState.appBarColors.copyWith(
         titleAppBarColor: event.color
       );
       emit(ColorLoaded(currentState.todoColor, updateColor));
@@ -80,7 +88,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState>{
   Future<void> _onUpdateButtonSettings (ColorUpdateButtonSettings event, Emitter<ColorState> emit) async{
     if(state is ColorLoaded) {
       final currentState =  state as ColorLoaded;
-      final updateColor = AppBarColors(
+      final updateColor = currentState.appBarColors.copyWith(
         buttonSettingsTextColor: event.color
       );
       emit(ColorLoaded(currentState.todoColor, updateColor));
@@ -89,7 +97,7 @@ class ColorBloc extends Bloc<ColorEvent, ColorState>{
   Future<void> _onUpdateButtonAdded (ColorUpdateButtonAdded event, Emitter<ColorState> emit) async{
     if(state is ColorLoaded) {
       final currentState =  state as ColorLoaded;
-      final updateColor = AppBarColors(
+      final updateColor = currentState.appBarColors.copyWith(
         buttonAddedTextColor: event.color
       );
       emit(ColorLoaded(currentState.todoColor, updateColor));
