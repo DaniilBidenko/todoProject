@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do/bloc/color_bloc.dart';
 import 'package:to_do/bloc/color_event.dart';
 import 'package:to_do/bloc/color_state.dart';
+import 'package:to_do/data/database/database_helper.dart';
 import 'package:to_do/data/model/todo.dart';
 import 'package:to_do/my_color/color.dart';
 
@@ -25,7 +26,7 @@ class _SettingsScreenState extends State<SettingsScreen>{
   Color buttonSettingsTextColor = Colors.grey;
   Color buttonAddedTextColor = Colors.white;
   late TodoColor todoColor;
-   Key _listKey = UniqueKey();
+  Key _listKey = UniqueKey();
 
   Future<void> _loadTodoColors() async{
     final colors = await TodoColor.loadFromPrefs();
@@ -238,16 +239,8 @@ class _SettingsScreenState extends State<SettingsScreen>{
       buttonAddedTextColor: buttonAddedTextColor,
     );
 
-    // Сохраняем цвета в SharedPreferences
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(TodoColor.titleColorKey, titleColor.value);
-    await prefs.setInt(TodoColor.descriptionColorKey, descriptionColor.value);
-    await prefs.setInt(TodoColor.createdDataColorKey, createdDataColor.value);
-    await prefs.setInt(TodoColor.iconTaskColorKey, iconTaskColor.value);
-    await prefs.setInt(TodoColor.iconDeleteColorKey, iconDeleteColor.value);
-    await prefs.setInt(AppBarColors.titleAppBarColorKey, titleAppBarColor.value);
-    await prefs.setInt(AppBarColors.buttonSettingsTextColorKey, buttonSettingsTextColor.value);
-    await prefs.setInt(AppBarColors.buttonAddedTextColorKey, buttonAddedTextColor.value);
+    await todoColor.saveTodoColors();
+    await appBarColors.saveAppBarColors();
     
     // Показываем сообщение об успешном сохранении
     ScaffoldMessenger.of(context).showSnackBar(

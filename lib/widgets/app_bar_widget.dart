@@ -20,8 +20,6 @@ class _AppBarWidgetState extends State<AppBarWidget> {
 
   late AppBarColors appBarColors;
   
-  Key _listKey = UniqueKey();
-  
   @override
   void initState() {
     super.initState();
@@ -110,7 +108,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                       builder: (context) => SettingsScreen())
                     );
                 }, 
-                Colors.grey
+                Colors.black
                 ),
                 appbarButtons(
                   'Статистика', 
@@ -123,7 +121,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                         )
                       );
                   }, 
-                  Colors.grey
+                  Colors.black
                   )
               ],
             ),
@@ -138,11 +136,9 @@ class _AppBarWidgetState extends State<AppBarWidget> {
     double appBatText = width * 0.025;
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
+                        backgroundColor: Colors.white,
                         elevation: 0,
-                        foregroundColor: Colors.grey,
                         side: BorderSide.none,
-                        overlayColor: Colors.transparent
                       ),
                     onPressed: onTap,
                     child: Text(label,
